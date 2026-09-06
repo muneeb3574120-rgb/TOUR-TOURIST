@@ -1,0 +1,1515 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>TOUR TOURIST | Explore The World</title>
+
+<meta name="description" content="Discover beautiful destinations, explore countries and find your next unforgettable adventure with Tour Tourist.">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    font-family:Arial,Helvetica,sans-serif;
+    background:#000;
+    color:#fff;
+    overflow-x:hidden;
+}
+
+/* ================= HEADER ================= */
+
+header{
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    z-index:50;
+    padding:28px 6%;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.logo{
+    font-size:20px;
+    font-weight:900;
+    letter-spacing:4px;
+    white-space:nowrap;
+}
+
+nav{
+    display:flex;
+    align-items:center;
+    gap:30px;
+}
+
+nav a{
+    color:#fff;
+    text-decoration:none;
+    font-size:13px;
+    font-weight:700;
+    letter-spacing:1px;
+    transition:.3s;
+}
+
+nav a:hover{
+    opacity:.55;
+}
+
+/* ================= HERO ================= */
+
+.hero{
+    position:relative;
+    min-height:100vh;
+    height:100vh;
+    overflow:hidden;
+    display:flex;
+    align-items:center;
+}
+
+.slide{
+    position:absolute;
+    inset:0;
+    background-size:cover;
+    background-position:center center;
+    opacity:0;
+    transform:scale(1.02);
+    transition:
+        opacity 1.4s ease,
+        transform 7s ease;
+}
+
+.slide.active{
+    opacity:1;
+    transform:scale(1);
+}
+
+.slide::after{
+    content:"";
+    position:absolute;
+    inset:0;
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(0,0,0,.82) 0%,
+            rgba(0,0,0,.48) 40%,
+            rgba(0,0,0,.12) 75%,
+            rgba(0,0,0,.35) 100%
+        ),
+        linear-gradient(
+            0deg,
+            rgba(0,0,0,.85) 0%,
+            transparent 35%,
+            rgba(0,0,0,.35) 100%
+        );
+}
+
+.hero-content{
+    position:relative;
+    z-index:5;
+    width:100%;
+    padding:0 7%;
+    margin-top:25px;
+}
+
+.eyebrow{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    font-size:12px;
+    letter-spacing:4px;
+    font-weight:700;
+    margin-bottom:24px;
+    color:#ddd;
+}
+
+.eyebrow span{
+    width:35px;
+    height:1px;
+    background:#fff;
+}
+
+.hero h1{
+    font-size:clamp(52px,8vw,118px);
+    line-height:.9;
+    letter-spacing:-5px;
+    font-weight:900;
+    max-width:1000px;
+}
+
+.hero-description{
+    margin-top:28px;
+    max-width:570px;
+    color:#ddd;
+    font-size:18px;
+    line-height:1.6;
+}
+
+/* ================= SEARCH ================= */
+
+.search-wrapper{
+    margin-top:32px;
+    width:min(680px,100%);
+}
+
+.search-box{
+    display:flex;
+    align-items:center;
+    width:100%;
+    height:64px;
+    border:1px solid rgba(255,255,255,.55);
+    background:rgba(0,0,0,.3);
+    backdrop-filter:blur(15px);
+    border-radius:40px;
+    padding:6px;
+}
+
+.search-icon{
+    width:50px;
+    text-align:center;
+    font-size:20px;
+    opacity:.8;
+}
+
+.search-box input{
+    flex:1;
+    height:100%;
+    border:0;
+    outline:0;
+    background:transparent;
+    color:white;
+    font-size:15px;
+}
+
+.search-box input::placeholder{
+    color:#ccc;
+}
+
+.search-box button{
+    height:52px;
+    padding:0 27px;
+    border:0;
+    border-radius:30px;
+    background:#fff;
+    color:#000;
+    font-weight:800;
+    cursor:pointer;
+    transition:.25s;
+}
+
+.search-box button:hover{
+    transform:scale(1.04);
+}
+
+/* ================= QUIZ BUTTON ================= */
+
+.quiz-button{
+    margin-top:17px;
+    border:1px solid rgba(255,255,255,.5);
+    background:rgba(255,255,255,.08);
+    color:white;
+    padding:14px 23px;
+    border-radius:30px;
+    font-weight:700;
+    cursor:pointer;
+    backdrop-filter:blur(10px);
+    transition:.3s;
+}
+
+.quiz-button:hover{
+    background:#fff;
+    color:#000;
+}
+
+/* ================= SLIDE INFO ================= */
+
+.slide-info{
+    position:absolute;
+    z-index:8;
+    bottom:38px;
+    left:7%;
+    display:flex;
+    align-items:end;
+    gap:20px;
+}
+
+.slide-number{
+    font-size:12px;
+    color:#aaa;
+    letter-spacing:2px;
+}
+
+.slide-place{
+    font-size:14px;
+    font-weight:700;
+    letter-spacing:3px;
+    text-transform:uppercase;
+}
+
+/* ================= SLIDE DOTS ================= */
+
+.slide-dots{
+    position:absolute;
+    z-index:10;
+    right:6%;
+    bottom:42px;
+    display:flex;
+    gap:8px;
+}
+
+.dot{
+    width:28px;
+    height:3px;
+    background:rgba(255,255,255,.35);
+    cursor:pointer;
+    transition:.3s;
+}
+
+.dot.active{
+    background:#fff;
+    width:45px;
+}
+
+/* ================= INTRO ================= */
+
+.intro{
+    background:#fff;
+    color:#111;
+    padding:105px 8%;
+}
+
+.intro-container{
+    max-width:1200px;
+    margin:auto;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:80px;
+    align-items:center;
+}
+
+.intro-label{
+    font-size:12px;
+    letter-spacing:4px;
+    font-weight:800;
+    color:#777;
+    margin-bottom:20px;
+}
+
+.intro h2{
+    font-size:clamp(45px,6vw,80px);
+    line-height:.95;
+    letter-spacing:-3px;
+}
+
+.intro-text{
+    color:#555;
+    font-size:18px;
+    line-height:1.8;
+}
+
+/* ================= FEATURE CARDS ================= */
+
+.featured{
+    background:#f5f5f5;
+    color:#111;
+    padding:100px 6%;
+}
+
+.section-title{
+    max-width:1200px;
+    margin:0 auto 45px;
+}
+
+.section-title small{
+    color:#777;
+    font-size:11px;
+    letter-spacing:4px;
+    font-weight:800;
+}
+
+.section-title h2{
+    font-size:clamp(40px,5vw,70px);
+    margin-top:12px;
+    letter-spacing:-3px;
+}
+
+.feature-grid{
+    max-width:1200px;
+    margin:auto;
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:20px;
+}
+
+.feature-card{
+    height:480px;
+    position:relative;
+    overflow:hidden;
+    border-radius:5px;
+    background:#222;
+}
+
+.feature-card img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    transition:transform .8s ease;
+}
+
+.feature-card:hover img{
+    transform:scale(1.06);
+}
+
+.feature-card::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:linear-gradient(transparent 35%,rgba(0,0,0,.85));
+}
+
+.card-content{
+    position:absolute;
+    z-index:2;
+    bottom:28px;
+    left:28px;
+    right:20px;
+    color:white;
+}
+
+.card-content small{
+    letter-spacing:3px;
+    font-size:10px;
+    opacity:.8;
+}
+
+.card-content h3{
+    margin-top:8px;
+    font-size:30px;
+}
+
+.card-content p{
+    margin-top:8px;
+    font-size:13px;
+    color:#ddd;
+}
+
+/* ================= ABOUT ================= */
+
+.about{
+    background:#000;
+    color:white;
+    padding:110px 8%;
+}
+
+.about-container{
+    max-width:1200px;
+    margin:auto;
+}
+
+.about-label{
+    color:#888;
+    font-size:11px;
+    letter-spacing:4px;
+    font-weight:800;
+}
+
+.about h2{
+    margin-top:20px;
+    font-size:clamp(45px,7vw,95px);
+    line-height:.9;
+    letter-spacing:-4px;
+}
+
+.about-content{
+    margin-top:50px;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:80px;
+}
+
+.about-content p{
+    color:#aaa;
+    font-size:17px;
+    line-height:1.8;
+}
+
+/* ================= FOOTER ================= */
+
+footer{
+    background:#fff;
+    color:#111;
+    padding:42px 7%;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.footer-logo{
+    font-size:18px;
+    font-weight:900;
+    letter-spacing:3px;
+}
+
+.footer-text{
+    color:#666;
+    font-size:12px;
+    text-align:right;
+    line-height:1.7;
+}
+
+/* ================= QUIZ ================= */
+
+.quiz-overlay{
+    position:fixed;
+    inset:0;
+    z-index:200;
+    display:none;
+    justify-content:center;
+    align-items:center;
+    padding:20px;
+    background:rgba(0,0,0,.86);
+    backdrop-filter:blur(14px);
+}
+
+.quiz-box{
+    width:min(650px,100%);
+    max-height:90vh;
+    overflow:auto;
+    background:#111;
+    border:1px solid #444;
+    border-radius:22px;
+    padding:35px;
+    box-shadow:0 30px 100px rgba(0,0,0,.8);
+}
+
+.close{
+    float:right;
+    font-size:27px;
+    color:#888;
+    cursor:pointer;
+}
+
+.quiz-box h2{
+    font-size:35px;
+    margin-bottom:8px;
+}
+
+.quiz-sub{
+    color:#888;
+    margin-bottom:30px;
+    line-height:1.5;
+}
+
+.question{
+    margin-bottom:25px;
+}
+
+.question h3{
+    font-size:16px;
+    margin-bottom:12px;
+}
+
+.options{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:9px;
+}
+
+.option{
+    padding:14px;
+    border:1px solid #3c3c3c;
+    border-radius:11px;
+    cursor:pointer;
+    color:#ddd;
+    transition:.2s;
+}
+
+.option:hover{
+    border-color:#aaa;
+}
+
+.option.selected{
+    background:white;
+    color:#000;
+    border-color:white;
+}
+
+.quiz-submit{
+    width:100%;
+    padding:16px;
+    border:0;
+    border-radius:30px;
+    background:white;
+    color:#000;
+    font-weight:900;
+    cursor:pointer;
+    margin-top:5px;
+}
+
+.skip{
+    width:100%;
+    border:0;
+    background:transparent;
+    color:#777;
+    margin-top:12px;
+    cursor:pointer;
+    padding:8px;
+}
+
+.result{
+    display:none;
+    text-align:center;
+    padding:25px 0;
+}
+
+.result-icon{
+    font-size:55px;
+}
+
+.result h2{
+    margin:15px 0;
+    font-size:38px;
+}
+
+.result-place{
+    font-size:29px;
+    font-weight:900;
+}
+
+.result p{
+    color:#aaa;
+    line-height:1.7;
+    margin:18px auto 25px;
+    max-width:480px;
+}
+
+.result button{
+    padding:15px 25px;
+    border:0;
+    border-radius:30px;
+    background:white;
+    color:#000;
+    font-weight:800;
+    cursor:pointer;
+}
+
+/* ================= MOBILE ================= */
+
+@media(max-width:800px){
+
+    header{
+        padding:20px 5%;
+    }
+
+    .logo{
+        font-size:15px;
+        letter-spacing:3px;
+    }
+
+    nav{
+        gap:12px;
+    }
+
+    nav a{
+        font-size:10px;
+    }
+
+    .hero-content{
+        padding:0 6%;
+    }
+
+    .hero h1{
+        font-size:clamp(48px,14vw,80px);
+        letter-spacing:-3px;
+    }
+
+    .hero-description{
+        font-size:15px;
+    }
+
+    .search-box{
+        height:58px;
+    }
+
+    .search-box button{
+        height:46px;
+        padding:0 18px;
+    }
+
+    .slide-info{
+        left:6%;
+        bottom:25px;
+    }
+
+    .slide-dots{
+        right:6%;
+        bottom:27px;
+    }
+
+    .intro-container{
+        grid-template-columns:1fr;
+        gap:35px;
+    }
+
+    .feature-grid{
+        grid-template-columns:1fr;
+    }
+
+    .feature-card{
+        height:400px;
+    }
+
+    .about-content{
+        grid-template-columns:1fr;
+        gap:25px;
+    }
+
+    footer{
+        flex-direction:column;
+        align-items:flex-start;
+        gap:20px;
+    }
+
+    .footer-text{
+        text-align:left;
+    }
+
+    .options{
+        grid-template-columns:1fr;
+    }
+
+    .quiz-box{
+        padding:25px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- ================= HEADER ================= -->
+
+<header>
+
+    <div class="logo">TOUR TOURIST</div>
+
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="explore.html">Explore</a>
+        <a href="countries.html">Countries</a>
+        <a href="#about">About</a>
+    </nav>
+
+</header>
+
+
+<!-- ================= HERO ================= -->
+
+<section class="hero">
+
+    <!-- SLIDES -->
+
+    <div class="slide active"
+         style="background-image:url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=2000&q=85');">
+    </div>
+
+    <div class="slide"
+         style="background-image:url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=2000&q=85');">
+    </div>
+
+    <div class="slide"
+         style="background-image:url('https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&w=2000&q=85');">
+    </div>
+
+    <div class="slide"
+         style="background-image:url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=2000&q=85');">
+    </div>
+
+    <div class="slide"
+         style="background-image:url('https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=2000&q=85');">
+    </div>
+
+
+    <div class="hero-content">
+
+        <div class="eyebrow">
+            <span></span>
+            DISCOVER • EXPLORE • EXPERIENCE
+        </div>
+
+        <h1>
+            EXPLORE<br>
+            THE WORLD.
+        </h1>
+
+        <p class="hero-description">
+            Discover extraordinary places, unforgettable experiences
+            and destinations worth travelling for.
+        </p>
+
+
+        <div class="search-wrapper">
+
+            <div class="search-box">
+
+                <div class="search-icon">⌕</div>
+
+                <input
+                    id="searchInput"
+                    type="text"
+                    placeholder="Search a country, city or destination..."
+                >
+
+                <button onclick="searchPlace()">
+                    SEARCH
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <button class="quiz-button" onclick="openQuiz()">
+            ✨ Find My Perfect Place
+        </button>
+
+    </div>
+
+
+    <div class="slide-info">
+
+        <div class="slide-number" id="slideNumber">
+            01 / 05
+        </div>
+
+        <div class="slide-place" id="slidePlace">
+            Swiss Alps
+        </div>
+
+    </div>
+
+
+    <div class="slide-dots">
+
+        <div class="dot active" onclick="goSlide(0)"></div>
+        <div class="dot" onclick="goSlide(1)"></div>
+        <div class="dot" onclick="goSlide(2)"></div>
+        <div class="dot" onclick="goSlide(3)"></div>
+        <div class="dot" onclick="goSlide(4)"></div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= INTRO ================= -->
+
+<section class="intro">
+
+    <div class="intro-container">
+
+        <div>
+
+            <div class="intro-label">
+                YOUR JOURNEY STARTS HERE
+            </div>
+
+            <h2>
+                THE WORLD<br>
+                IS WAITING.
+            </h2>
+
+        </div>
+
+        <div class="intro-text">
+
+            <p>
+                From peaceful mountain valleys to tropical islands,
+                ancient cities and wild landscapes, Tour Tourist helps
+                you discover places worth putting on your map.
+            </p>
+
+            <p style="margin-top:20px;">
+                Search thousands of possibilities, explore countries
+                and find the destination that matches the way you want
+                to travel.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= FEATURED ================= -->
+
+<section class="featured">
+
+    <div class="section-title">
+
+        <small>START EXPLORING</small>
+
+        <h2>
+            PLACES THAT INSPIRE.
+        </h2>
+
+    </div>
+
+
+    <div class="feature-grid">
+
+
+        <div class="feature-card">
+
+            <img
+                src="https://images.unsplash.com/photo-1526772662000-3f88f10405ff?auto=format&fit=crop&w=1200&q=85"
+                alt="Mountain destination"
+                loading="lazy"
+            >
+
+            <div class="card-content">
+
+                <small>ADVENTURE</small>
+
+                <h3>Mountain Escapes</h3>
+
+                <p>
+                    Find dramatic peaks, valleys and unforgettable views.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="feature-card">
+
+            <img
+                src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=85"
+                alt="Beautiful beach"
+                loading="lazy"
+            >
+
+            <div class="card-content">
+
+                <small>RELAXATION</small>
+
+                <h3>Tropical Paradise</h3>
+
+                <p>
+                    Discover beaches, islands and crystal-clear waters.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="feature-card">
+
+            <img
+                src="https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&w=1200&q=85"
+                alt="Historic destination"
+                loading="lazy"
+            >
+
+            <div class="card-content">
+
+                <small>CULTURE</small>
+
+                <h3>Historic Wonders</h3>
+
+                <p>
+                    Walk through cities shaped by centuries of history.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= ABOUT ================= -->
+
+<section class="about" id="about">
+
+    <div class="about-container">
+
+        <div class="about-label">
+            ABOUT TOUR TOURIST
+        </div>
+
+        <h2>
+            TRAVEL<br>
+            DIFFERENTLY.
+        </h2>
+
+
+        <div class="about-content">
+
+            <p>
+                Tour Tourist is built for people who want to discover
+                more than the usual tourist checklist. Our goal is to
+                make exploring the world simple, beautiful and inspiring.
+            </p>
+
+            <p>
+                Explore countries, discover incredible destinations,
+                find new experiences and use Tour Tourist as the starting
+                point for your next adventure.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer>
+
+    <div class="footer-logo">
+        TOUR TOURIST
+    </div>
+
+    <div class="footer-text">
+        Designed & Developed by Muneeb Rehman<br>
+        © 2026 Tour Tourist. All rights reserved.
+    </div>
+
+</footer>
+
+
+<!-- ================= QUIZ ================= -->
+
+<div class="quiz-overlay" id="quizOverlay">
+
+    <div class="quiz-box">
+
+        <div class="close" onclick="closeQuiz()">×</div>
+
+
+        <div id="quizContent">
+
+            <h2>Find Your Perfect Place</h2>
+
+            <div class="quiz-sub">
+                Tell us how you want to travel and we'll find a destination for you.
+            </div>
+
+
+            <!-- QUESTION 1 -->
+
+            <div class="question">
+
+                <h3>1. What atmosphere do you want?</h3>
+
+                <div class="options">
+
+                    <div class="option"
+                         onclick="choose(this,'atmosphere','peaceful')">
+                        🌿 Peaceful
+                    </div>
+
+                    <div class="option"
+                         onclick="choose(this,'atmosphere','crowded')">
+                        🏙️ Busy & Energetic
+                    </div>
+
+                    <div class="option"
+                         onclick="choose(this,'atmosphere','adventure')">
+                        ⚡ Adventurous
+                    </div>
+
+                    <div class="option"
+                         onclick="choose(this,'atmosphere','remote')">
+                        🌌 Quiet & Remote
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- QUESTION 2 -->
+
+            <div class="question">
+
+                <h3>2. What scenery do you prefer?</h3>
+
+                <div class="options">
+
+                    <div class="option"
+                         onclick="choose(this,'scenery','mountains')">
+                        🏔️ Mountains
+                    </div>
+
+                    <div class="option"
+                         onclick="choose(this,'scenery','beach')">
+                        🏖️ Beach
+                    </div>
+
+                    <div class="option"
+                         onclick="choose(this,'scenery','forest')">
+                        🌲 Forest
+                    </div>
+
+                    <div class="option"
+                         onclick="choose(this,'scenery','city')">
+                        🌆 City
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- QUESTION 3 -->
+
+            <div class="question">
+
+                <h3>3. What experience do you want?</h3>
+
+                <div class="options">
+
+                    <div class="option"
+                         onclick="choose(this,'activity','photography')">
+                        📸 Photography
+                    </div>
+
+                    <div class="option"
+                         onclick="choose(this,'activity','adventure')">
+                        🧗 Adventure
+                    </div>
+
+                    <div class="option"
+                         onclick="choose(this,'activity','history')">
+                        🏛️ History
+                    </div>
+
+                    <div class="option"
+                         onclick="choose(this,'activity','relaxation')">
+                        🧘 Relaxation
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- QUESTION 4 -->
+
+            <div class="question">
+
+                <h3>4. What's your budget?</h3>
+
+                <div class="options">
+
+                    <div class="option"
+                         onclick="choose(this,'budget','budget')">
+                        💰 Budget
+                    </div>
+
+                    <div class="option"
+                         onclick="choose(this,'budget','moderate')">
+                        💳 Moderate
+                    </div>
+
+                    <div class="option"
+                         onclick="choose(this,'budget','luxury')">
+                        💎 Luxury
+                    </div>
+
+                    <div class="option"
+                         onclick="choose(this,'budget','any')">
+                        ✈️ Any
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <button class="quiz-submit" onclick="showResult()">
+                FIND MY DESTINATION
+            </button>
+
+            <button class="skip" onclick="closeQuiz()">
+                Skip for now
+            </button>
+
+        </div>
+
+
+        <!-- RESULT -->
+
+        <div class="result" id="result">
+
+            <div class="result-icon">
+                ✨
+            </div>
+
+            <h2>YOUR PERFECT MATCH</h2>
+
+            <div class="result-place" id="resultPlace">
+                Switzerland
+            </div>
+
+            <p id="resultText">
+                Beautiful mountains, peaceful valleys and spectacular landscapes.
+            </p>
+
+            <button onclick="exploreResult()">
+                EXPLORE THIS PLACE →
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+/* =========================================================
+   SEARCH
+========================================================= */
+
+function searchPlace(){
+
+    const input =
+        document.getElementById("searchInput").value.trim();
+
+    if(!input){
+        document.getElementById("searchInput").focus();
+        return;
+    }
+
+    window.location.href =
+        "explore.html?search=" +
+        encodeURIComponent(input);
+}
+
+
+document
+.getElementById("searchInput")
+.addEventListener("keydown",function(e){
+
+    if(e.key === "Enter"){
+        searchPlace();
+    }
+
+});
+
+
+/* =========================================================
+   HERO SLIDESHOW
+========================================================= */
+
+const slides =
+    document.querySelectorAll(".slide");
+
+const dots =
+    document.querySelectorAll(".dot");
+
+const slidePlaces = [
+    "Swiss Alps",
+    "Maldives",
+    "Kyoto, Japan",
+    "Norway",
+    "New Zealand"
+];
+
+let currentSlide = 0;
+
+
+/* PRELOAD IMAGES */
+
+slides.forEach(function(slide){
+
+    const image =
+        slide.style.backgroundImage
+        .replace('url("','')
+        .replace('")','')
+        .replace("url('",'')
+        .replace("')",'');
+
+    const img = new Image();
+
+    img.src = image;
+
+});
+
+
+function goSlide(number){
+
+    slides[currentSlide].classList.remove("active");
+    dots[currentSlide].classList.remove("active");
+
+    currentSlide = number;
+
+    slides[currentSlide].classList.add("active");
+    dots[currentSlide].classList.add("active");
+
+    document.getElementById("slideNumber").textContent =
+        String(currentSlide + 1).padStart(2,"0") +
+        " / " +
+        String(slides.length).padStart(2,"0");
+
+    document.getElementById("slidePlace").textContent =
+        slidePlaces[currentSlide];
+
+}
+
+
+function nextSlide(){
+
+    let next = currentSlide + 1;
+
+    if(next >= slides.length){
+        next = 0;
+    }
+
+    goSlide(next);
+
+}
+
+
+/* CHANGE EVERY 5 SECONDS */
+
+setInterval(nextSlide,5000);
+
+
+/* =========================================================
+   QUIZ
+========================================================= */
+
+let quizAnswers = {};
+
+let quizResult = "Switzerland";
+
+
+function openQuiz(){
+
+    document.getElementById("quizOverlay").style.display =
+        "flex";
+
+}
+
+
+function closeQuiz(){
+
+    document.getElementById("quizOverlay").style.display =
+        "none";
+
+}
+
+
+function choose(element,type,value){
+
+    const group =
+        element.parentElement;
+
+    group
+        .querySelectorAll(".option")
+        .forEach(function(option){
+
+            option.classList.remove("selected");
+
+        });
+
+    element.classList.add("selected");
+
+    quizAnswers[type] = value;
+
+}
+
+
+/* =========================================================
+   QUIZ RESULT
+========================================================= */
+
+function showResult(){
+
+    const scenery = quizAnswers.scenery;
+    const activity = quizAnswers.activity;
+    const budget = quizAnswers.budget;
+    const atmosphere = quizAnswers.atmosphere;
+
+    let place = "Switzerland";
+
+    let text =
+        "Beautiful mountains, peaceful valleys and spectacular landscapes make Switzerland an unforgettable destination.";
+
+
+    if(scenery === "beach"){
+
+        if(budget === "luxury"){
+
+            place = "Maldives";
+
+            text =
+                "Crystal-clear water, tropical islands and peaceful luxury make the Maldives perfect for a relaxing escape.";
+
+        }else{
+
+            place = "Thailand";
+
+            text =
+                "Thailand offers beautiful beaches, exciting experiences, tropical scenery and incredible culture.";
+
+        }
+
+    }
+
+    else if(scenery === "mountains"){
+
+        if(atmosphere === "remote" ||
+           atmosphere === "peaceful"){
+
+            place = "Switzerland";
+
+            text =
+                "The Swiss Alps offer peaceful valleys, dramatic mountains, alpine lakes and incredible scenery.";
+
+        }else{
+
+            place = "New Zealand";
+
+            text =
+                "New Zealand is perfect for dramatic landscapes, outdoor adventures and unforgettable road trips.";
+
+        }
+
+    }
+
+    else if(scenery === "forest"){
+
+        place = "New Zealand";
+
+        text =
+            "Wild forests, mountains, lakes and spectacular landscapes make New Zealand ideal for nature lovers.";
+
+    }
+
+    else if(scenery === "city"){
+
+        if(activity === "history"){
+
+            place = "Italy";
+
+            text =
+                "Italy combines ancient history, architecture, art, culture and some of the world's most famous cities.";
+
+        }else{
+
+            place = "Japan";
+
+            text =
+                "Japan combines futuristic cities, traditional culture, incredible food and beautiful scenery.";
+
+        }
+
+    }
+
+    else if(activity === "history"){
+
+        place = "Italy";
+
+        text =
+            "Italy is filled with ancient landmarks, historic cities, art, architecture and unforgettable culture.";
+
+    }
+
+    else if(activity === "relaxation"){
+
+        place = "Maldives";
+
+        text =
+            "The Maldives is perfect for slowing down, enjoying beautiful beaches and escaping everyday life.";
+
+    }
+
+    else if(activity === "adventure"){
+
+        place = "Norway";
+
+        text =
+            "Norway offers dramatic fjords, mountains, remote landscapes and incredible outdoor adventures.";
+
+    }
+
+    else if(activity === "photography"){
+
+        place = "Iceland";
+
+        text =
+            "Iceland offers waterfalls, glaciers, volcanic landscapes and dramatic scenery for unforgettable photography.";
+
+    }
+
+
+    quizResult = place;
+
+    document.getElementById("quizContent").style.display =
+        "none";
+
+    document.getElementById("result").style.display =
+        "block";
+
+    document.getElementById("resultPlace").textContent =
+        place;
+
+    document.getElementById("resultText").textContent =
+        text;
+
+}
+
+
+function exploreResult(){
+
+    window.location.href =
+        "explore.html?search=" +
+        encodeURIComponent(quizResult);
+
+}
+
+
+/* =========================================================
+   CLOSE QUIZ WHEN CLICKING OUTSIDE
+========================================================= */
+
+document
+.getElementById("quizOverlay")
+.addEventListener("click",function(e){
+
+    if(e.target === this){
+        closeQuiz();
+    }
+
+});
+
+</script>
+
+</body>
+</html>
+```

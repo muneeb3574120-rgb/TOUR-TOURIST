@@ -1,0 +1,2781 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Destination | Tour Tourist</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,sans-serif;background:#f4f4f4;color:#111}
+nav{position:absolute;top:0;left:0;right:0;z-index:10;padding:28px 6%;display:flex;justify-content:space-between;color:#fff}
+.logo{font-size:25px;font-weight:bold;letter-spacing:2px}
+nav a{color:#fff;text-decoration:none;margin-left:25px}
+.hero{height:70vh;min-height:520px;background:#222 center/cover no-repeat;position:relative;color:#fff;display:flex;align-items:flex-end}
+.hero:after{content:"";position:absolute;inset:0;background:linear-gradient(transparent 20%,rgba(0,0,0,.85))}
+.heroContent{position:relative;z-index:2;padding:6%;width:100%}
+.hero h1{font-size:clamp(45px,8vw,90px);letter-spacing:3px;margin-bottom:12px}
+.hero p{font-size:18px}
+.container{width:90%;max-width:1200px;margin:55px auto}
+.back{display:inline-block;margin-bottom:25px;color:#111;text-decoration:none;font-weight:bold}
+.section{background:#fff;border-radius:18px;padding:35px;margin-bottom:28px;box-shadow:0 8px 25px rgba(0,0,0,.07)}
+h2{font-size:32px;margin-bottom:16px}
+.description{font-size:18px;line-height:1.8;color:#555}
+.infoGrid{display:grid;grid-template-columns:repeat(4,1fr);gap:15px}
+.info{padding:22px;background:#f3f3f3;border-radius:14px;line-height:1.5}
+.info b{display:block;margin-bottom:8px}
+ul{padding-left:22px;line-height:2}
+.gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}
+.gallery figure{margin:0;display:none}
+.gallery img{width:100%;height:230px;object-fit:cover;border-radius:14px;background:#ddd}
+.gallery figcaption{font-size:12px;color:#777;margin-top:6px}
+.uploadBox{padding:22px;background:#fafafa;border:1px dashed #bbb;border-radius:14px;margin-bottom:20px}
+.uploadBox p{color:#666;line-height:1.6;margin-bottom:12px}
+.uploadBox input{max-width:100%}
+.map{width:100%;height:400px;border:0;border-radius:15px}
+.notice{color:#777;font-size:14px;line-height:1.6}
+footer{background:#000;color:#fff;text-align:center;padding:45px 20px}
+footer p{color:#aaa;margin:8px}
+@media(max-width:900px){.infoGrid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:650px){.infoGrid,.gallery{grid-template-columns:1fr}nav a{display:none}.hero{min-height:450px}}
+
+/* TOUR TOURIST AI CHATBOT */
+.chatButton{
+    position:fixed;
+    right:25px;
+    bottom:25px;
+    z-index:100;
+    width:62px;
+    height:62px;
+    border:0;
+    border-radius:50%;
+    background:#111;
+    color:#fff;
+    font-size:25px;
+    cursor:pointer;
+    box-shadow:0 8px 30px rgba(0,0,0,.3);
+}
+.chatBox{
+    position:fixed;
+    right:25px;
+    bottom:100px;
+    z-index:101;
+    width:360px;
+    max-width:calc(100vw - 30px);
+    height:520px;
+    background:#fff;
+    color:#111;
+    border-radius:20px;
+    overflow:hidden;
+    box-shadow:0 15px 50px rgba(0,0,0,.3);
+    display:none;
+    flex-direction:column;
+}
+.chatHeader{
+    background:#111;
+    color:#fff;
+    padding:18px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+.chatHeader b{font-size:17px}
+.chatClose{
+    background:none;
+    border:0;
+    color:#fff;
+    font-size:22px;
+    cursor:pointer;
+}
+.chatMessages{
+    flex:1;
+    padding:15px;
+    overflow-y:auto;
+    background:#f6f6f6;
+}
+.message{
+    max-width:85%;
+    padding:11px 13px;
+    border-radius:15px;
+    margin-bottom:10px;
+    line-height:1.45;
+    font-size:14px;
+}
+.bot{
+    background:#fff;
+    border:1px solid #e5e5e5;
+}
+.user{
+    background:#111;
+    color:#fff;
+    margin-left:auto;
+}
+.chatQuick{
+    display:flex;
+    gap:7px;
+    padding:9px;
+    overflow-x:auto;
+    background:#fff;
+}
+.chatQuick button{
+    white-space:nowrap;
+    border:1px solid #ddd;
+    background:#fff;
+    border-radius:20px;
+    padding:7px 11px;
+    cursor:pointer;
+}
+.chatInput{
+    display:flex;
+    border-top:1px solid #ddd;
+    background:#fff;
+}
+.chatInput input{
+    flex:1;
+    border:0;
+    outline:0;
+    padding:15px;
+    font-size:14px;
+}
+.chatInput button{
+    border:0;
+    background:#111;
+    color:#fff;
+    padding:0 18px;
+    cursor:pointer;
+}
+
+</style>
+</head>
+<body>
+
+<section class="hero" id="hero">
+<nav>
+<div class="logo">TOUR TOURIST</div>
+<div><a href="index.html">Home</a><a href="explore.html">Explore</a></div>
+</nav>
+<div class="heroContent">
+<h1 id="title">Destination</h1>
+<p id="location">Loading...</p>
+</div>
+</section>
+
+<main class="container">
+<a class="back" href="explore.html">← Back to Explore</a>
+
+<section class="section">
+<h2>About this destination</h2>
+<p class="description" id="description"></p>
+</section>
+
+<section class="section">
+<h2>Quick Information</h2>
+<div class="infoGrid">
+<div class="info"><b>📍 Region</b><span id="region"></span></div>
+<div class="info"><b>🌤️ Best Time</b><span id="bestTime"></span></div>
+<div class="info"><b>💰 Budget</b><span id="budget"></span></div>
+<div class="info"><b>🏷️ Type</b><span id="type"></span></div>
+</div>
+</section>
+
+<section class="section">
+<h2>Highlights</h2>
+<ul id="highlights"></ul>
+</section>
+
+<section class="section">
+<h2>Things to Do</h2>
+<ul id="activities"></ul>
+</section>
+
+<section class="section">
+<h2>Facts</h2>
+<ul id="facts"></ul>
+</section>
+
+<section class="section">
+<h2>Photo Gallery</h2>
+<div class="uploadBox">
+<p><b>📸 Your destination photos</b><br>
+For the final website, place verified/licensed photos in your project folder:
+<code>images/destinations/</code><br>
+Use these filenames: <code id="filenameExample"></code>
+</p>
+<input type="file" id="photoPicker" accept="image/*" multiple>
+<p class="notice">The picker previews photos in this browser only. It does not permanently upload files yet; permanent uploading will be connected to the future Tour Tourist backend/admin system.</p>
+</div>
+<div class="gallery" id="gallery"></div>
+</section>
+
+<section class="section">
+<h2>Location Map</h2>
+<iframe class="map" id="map" loading="lazy"></iframe>
+</section>
+</main>h
+
+
+<!-- TOUR TOURIST AI CHATBOT -->
+<button class="chatButton" onclick="toggleChat()" aria-label="Open Tour Tourist AI">🤖</button>
+
+<div class="chatBox" id="chatBox">
+    <div class="chatHeader">
+        <b>🤖 Tour Tourist AI</b>
+        <button class="chatClose" onclick="toggleChat()">×</button>
+    </div>
+
+    <div class="chatMessages" id="chatMessages">
+        <div class="message bot">
+            Hi! I'm Tour Tourist AI 👋<br><br>
+            Ask me about this destination, activities, budget, best time to visit, or places to explore.
+        </div>
+    </div>
+
+    <div class="chatQuick">
+        <button onclick="quickChat('What can I do here?')">Things to do</button>
+        <button onclick="quickChat('What is the best time to visit?')">Best time</button>
+        <button onclick="quickChat('Tell me about this place')">About</button>
+    </div>
+
+    <div class="chatInput">
+        <input id="chatInput" type="text" placeholder="Ask Tour Tourist AI..."
+               onkeydown="if(event.key==='Enter') sendChat()">
+        <button onclick="sendChat()">Send</button>
+    </div>
+</div>
+
+<footer>
+<div class="logo">TOUR TOURIST</div>
+<p>Explore the world. Discover your journey.</p>
+<p>Designed &amp; Developed by Muneeb Rehman</p>
+<p>© 2026 Tour Tourist. All rights reserved.</p>
+</footer>
+
+<script>
+const destinations = [
+  {
+    "name": "Hunza Valley",
+    "country": "PAKISTAN",
+    "region": "Gilgit-Baltistan",
+    "description": "Hunza Valley is a destination in Gilgit-Baltistan, Pakistan. Explore its scenery, local character and nearby attractions with Tour Tourist.",
+    "bestTime": "Best time depends on the season and activities. Check local conditions before travelling.",
+    "type": "Nature & Travel",
+    "activities": [
+      "Sightseeing",
+      "Photography",
+      "Explore local attractions",
+      "Enjoy the scenery"
+    ],
+    "facts": [
+      "Destination: Hunza Valley",
+      "Region: Gilgit-Baltistan",
+      "Country: Pakistan"
+    ],
+    "slug": "hunza-valley",
+    "budget": "To be researched",
+    "highlights": [
+      "Hunza Valley",
+      "Gilgit-Baltistan",
+      "Pakistan"
+    ]
+  },
+  {
+    "name": "Skardu",
+    "country": "PAKISTAN",
+    "region": "Gilgit-Baltistan",
+    "description": "Skardu is a destination in Gilgit-Baltistan, Pakistan. Explore its scenery, local character and nearby attractions with Tour Tourist.",
+    "bestTime": "Best time depends on the season and activities. Check local conditions before travelling.",
+    "type": "Nature & Travel",
+    "activities": [
+      "Sightseeing",
+      "Photography",
+      "Explore local attractions",
+      "Enjoy the scenery"
+    ],
+    "facts": [
+      "Destination: Skardu",
+      "Region: Gilgit-Baltistan",
+      "Country: Pakistan"
+    ],
+    "slug": "skardu",
+    "budget": "To be researched",
+    "highlights": [
+      "Skardu",
+      "Gilgit-Baltistan",
+      "Pakistan"
+    ]
+  },
+  {
+    "name": "Fairy Meadows",
+    "country": "PAKISTAN",
+    "region": "Gilgit-Baltistan",
+    "description": "Fairy Meadows is a destination in Gilgit-Baltistan, Pakistan. Explore its scenery, local character and nearby attractions with Tour Tourist.",
+    "bestTime": "Best time depends on the season and activities. Check local conditions before travelling.",
+    "type": "Nature & Travel",
+    "activities": [
+      "Sightseeing",
+      "Photography",
+      "Explore local attractions",
+      "Enjoy the scenery"
+    ],
+    "facts": [
+      "Destination: Fairy Meadows",
+      "Region: Gilgit-Baltistan",
+      "Country: Pakistan"
+    ],
+    "slug": "fairy-meadows",
+    "budget": "To be researched",
+    "highlights": [
+      "Fairy Meadows",
+      "Gilgit-Baltistan",
+      "Pakistan"
+    ]
+  },
+  {
+    "name": "Attabad Lake",
+    "country": "PAKISTAN",
+    "region": "Gilgit-Baltistan",
+    "description": "Attabad Lake is a destination in Gilgit-Baltistan, Pakistan. Explore its scenery, local character and nearby attractions with Tour Tourist.",
+    "bestTime": "Best time depends on the season and activities. Check local conditions before travelling.",
+    "type": "Nature & Travel",
+    "activities": [
+      "Sightseeing",
+      "Photography",
+      "Explore local attractions",
+      "Enjoy the scenery"
+    ],
+    "facts": [
+      "Destination: Attabad Lake",
+      "Region: Gilgit-Baltistan",
+      "Country: Pakistan"
+    ],
+    "slug": "attabad-lake",
+    "budget": "To be researched",
+    "highlights": [
+      "Attabad Lake",
+      "Gilgit-Baltistan",
+      "Pakistan"
+    ]
+  },
+  {
+    "name": "Passu",
+    "country": "PAKISTAN",
+    "region": "Gilgit-Baltistan",
+    "description": "Passu is a destination in Gilgit-Baltistan, Pakistan. Explore its scenery, local character and nearby attractions with Tour Tourist.",
+    "bestTime": "Best time depends on the season and activities. Check local conditions before travelling.",
+    "type": "Nature & Travel",
+    "activities": [
+      "Sightseeing",
+      "Photography",
+      "Explore local attractions",
+      "Enjoy the scenery"
+    ],
+    "facts": [
+      "Destination: Passu",
+      "Region: Gilgit-Baltistan",
+      "Country: Pakistan"
+    ],
+    "slug": "passu",
+    "budget": "To be researched",
+    "highlights": [
+      "Passu",
+      "Gilgit-Baltistan",
+      "Pakistan"
+    ]
+  },
+  {
+    "name": "Khunjerab Pass",
+    "country": "PAKISTAN",
+    "region": "Gilgit-Baltistan",
+    "description": "Khunjerab Pass is a destination in Gilgit-Baltistan, Pakistan. Explore its scenery, local character and nearby attractions with Tour Tourist.",
+    "bestTime": "Best time depends on the season and activities. Check local conditions before travelling.",
+    "type": "Nature & Travel",
+    "activities": [
+      "Sightseeing",
+      "Photography",
+      "Explore local attractions",
+      "Enjoy the scenery"
+    ],
+    "facts": [
+      "Destination: Khunjerab Pass",
+      "Region: Gilgit-Baltistan",
+      "Country: Pakistan"
+    ],
+    "slug": "khunjerab-pass",
+    "budget": "To be researched",
+    "highlights": [
+      "Khunjerab Pass",
+      "Gilgit-Baltistan",
+      "Pakistan"
+    ]
+  },
+  {
+    "name": "Deosai National Park",
+    "country": "PAKISTAN",
+    "region": "Gilgit-Baltistan",
+    "description": "Deosai National Park is a destination in Gilgit-Baltistan, Pakistan. Explore its scenery, local character and nearby attractions with Tour Tourist.",
+    "bestTime": "Best time depends on the season and activities. Check local conditions before travelling.",
+    "type": "Nature & Travel",
+    "activities": [
+      "Sightseeing",
+      "Photography",
+      "Explore local attractions",
+      "Enjoy the scenery"
+    ],
+    "facts": [
+      "Destination: Deosai National Park",
+      "Region: Gilgit-Baltistan",
+      "Country: Pakistan"
+    ],
+    "slug": "deosai-national-park",
+    "budget": "To be researched",
+    "highlights": [
+      "Deosai National Park",
+      "Gilgit-Baltistan",
+      "Pakistan"
+    ]
+  },
+  {
+    "name": "Naltar Valley",
+    "country": "PAKISTAN",
+    "region": "Gilgit-Baltistan",
+    "description": "Naltar Valley is a destination in Gilgit-Baltistan, Pakistan. Explore its scenery, local character and nearby attractions with Tour Tourist.",
+    "bestTime": "Best time depends on the season and activities. Check local conditions before travelling.",
+    "type": "Nature & Travel",
+    "activities": [
+      "Sightseeing",
+      "Photography",
+      "Explore local attractions",
+      "Enjoy the scenery"
+    ],
+    "facts": [
+      "Destination: Naltar Valley",
+      "Region: Gilgit-Baltistan",
+      "Country: Pakistan"
+    ],
+    "slug": "naltar-valley",
+    "budget": "To be researched",
+    "highlights": [
+      "Naltar Valley",
+      "Gilgit-Baltistan",
+      "Pakistan"
+    ]
+  },
+  {
+    "name": "Shigar Valley",
+    "country": "PAKISTAN",
+    "region": "Gilgit-Baltistan",
+    "description": "Shigar Valley is a destination in Gilgit-Baltistan, Pakistan. Explore its scenery, local character and nearby attractions with Tour Tourist.",
+    "bestTime": "Best time depends on the season and activities. Check local conditions before travelling.",
+    "type": "Nature & Travel",
+    "activities": [
+      "Sightseeing",
+      "Photography",
+      "Explore local attractions",
+      "Enjoy the scenery"
+    ],
+    "facts": [
+      "Destination: Shigar Valley",
+      "Region: Gilgit-Baltistan",
+      "Country: Pakistan"
+    ],
+    "slug": "shigar-valley",
+    "budget": "To be researched",
+    "highlights": [
+      "Shigar Valley",
+      "Gilgit-Baltistan",
+      "Pakistan"
+    ]
+  },
+  {
+    "name": "Khaplu",
+    "country": "PAKISTAN",
+    "region": "Gilgit-Baltistan",
+    "description": "Khaplu is a destination in Gilgit-Baltistan, Pakistan. Explore its scenery, local character and nearby attractions with Tour Tourist.",
+    "bestTime": "Best time depends on the season and activities. Check local conditions before travelling.",
+    "type": "Nature & Travel",
+    "activities": [
+      "Sightseeing",
+      "Photography",
+      "Explore local attractions",
+      "Enjoy the scenery"
+    ],
+    "facts": [
+      "Destination: Khaplu",
+      "Region: Gilgit-Baltistan",
+      "Country: Pakistan"
+    ],
+    "slug": "khaplu",
+    "budget": "To be researched",
+    "highlights": [
+      "Khaplu",
+      "Gilgit-Baltistan",
+      "Pakistan"
+    ]
+  },
+  {
+    "name": "Upper Kachura Lake",
+    "country": "PAKISTAN",
+    "region": "Gilgit-Baltistan",
+    "description": "Upper Kachura Lake is a destination in Gilgit-Baltistan, Pakistan. Explore its scenery, local character and nearby attractions with Tour Tourist.",
+    "bestTime": "Best time depends on the season and activities. Check local conditions before travelling.",
+    "type": "Nature & Travel",
+    "activities": [
+      "Sightseeing",
+      "Photography",
+      "Explore local attractions",
+      "Enjoy the scenery"
+    ],
+    "facts": [
+      "Destination: Upper Kachura Lake",
+      "Region: Gilgit-Baltistan",
+      "Country: Pakistan"
+    ],
+    "slug": "upper-kachura-lake",
+    "budget": "To be researched",
+    "highlights": [
+      "Upper Kachura Lake",
+      "Gilgit-Baltistan",
+      "Pakistan"
+    ]
+  },
+  {
+    "name": "Katpana Desert",
+    "country": "PAKISTAN",
+    "region": "Gilgit-Baltistan",
+    "description": "Katpana Desert is a destination in Gilgit-Baltistan, Pakistan. Explore its scenery, local character and nearby attractions with Tour Tourist.",
+    "bestTime": "Best time depends on the season and activities. Check local conditions before travelling.",
+    "type": "Nature & Travel",
+    "activities": [
+      "Sightseeing",
+      "Photography",
+      "Explore local attractions",
+      "Enjoy the scenery"
+    ],
+    "facts": [
+      "Destination: Katpana Desert",
+      "Region: Gilgit-Baltistan",
+      "Country: Pakistan"
+    ],
+    "slug": "katpana-desert",
+    "budget": "To be researched",
+    "highlights": [
+      "Katpana Desert",
+      "Gilgit-Baltistan",
+      "Pakistan"
+    ]
+  },
+  {
+    "name": "Rama Meadows",
+    "country": "PAKISTAN",
+    "region": "Gilgit-Baltistan",
+    "description": "Rama Meadows is a destination in Gilgit-Baltistan, Pakistan. Explore its scenery, local character and nearby attractions with Tour Tourist.",
+    "bestTime": "Best time depends on the season and activities. Check local conditions before travelling.",
+    "type": "Nature & Travel",
+    "activities": [
+      "Sightseeing",
+      "Photography",
+      "Explore local attractions",
+      "Enjoy the scenery"
+    ],
+    "facts": [
+      "Destination: Rama Meadows",
+      "Region: Gilgit-Baltistan",
+      "Country: Pakistan"
+    ],
+    "slug": "rama-meadows",
+    "budget": "To be researched",
+    "highlights": [
+      "Rama Meadows",
+      "Gilgit-Baltistan",
+      "Pakistan"
+    ]
+  },
+  {
+    "name": "Astore Valley",
+    "country": "PAKISTAN",
+    "region": "Gilgit-Baltistan",
+    "description": "Astore Valley is a destination in Gilgit-Baltistan, Pakistan. Explore its scenery, local character and nearby attractions with Tour Tourist.",
+    "bestTime": "Best time depends on the season and activities. Check local conditions before travelling.",
+    "type": "Nature & Travel",
+    "activities": [
+      "Sightseeing",
+      "Photography",
+      "Explore local attractions",
+      "Enjoy the scenery"
+    ],
+    "facts": [
+      "Destination: Astore Valley",
+      "Region: Gilgit-Baltistan",
+      "Country: Pakistan"
+    ],
+    "slug": "astore-valley",
+    "budget": "To be researched",
+    "highlights": [
+      "Astore Valley",
+      "Gilgit-Baltistan",
+      "Pakistan"
+    ]
+  },
+  {
+    "name": "Phander Valley",
+    "country": "PAKISTAN",
+    "region": "Gilgit-Baltistan",
+    "description": "Phander Valley is a destination in Gilgit-Baltistan, Pakistan. Explore its scenery, local character and nearby attractions with Tour Tourist.",
+    "bestTime": "Best time depends on the season and activities. Check local conditions before travelling.",
+    "type": "Nature & Travel",
+    "activities": [
+      "Sightseeing",
+      "Photography",
+      "Explore local attractions",
+      "Enjoy the scenery"
+    ],
+    "facts": [
+      "Destination: Phander Valley",
+      "Region: Gilgit-Baltistan",
+      "Country: Pakistan"
+    ],
+    "slug": "phander-valley",
+    "budget": "To be researched",
+    "highlights": [
+      "Phander Valley",
+      "Gilgit-Baltistan",
+      "Pakistan"
+    ]
+  },
+  {
+    "name": "Hopper Valley",
+    "country": "PAKISTAN",
+    "region": "Gilgit-Baltistan",
+    "description": "Hopper Valley is a destination in Gilgit-Baltistan, Pakistan. Explore its scenery, local character and nearby attractions with Tour Tourist.",
+    "bestTime": "Best time depends on the season and activities. Check local conditions before travelling.",
+    "type": "Nature & Travel",
+    "activities": [
+      "Sightseeing",
+      "Photography",
+      "Explore local attractions",
+      "Enjoy the scenery"
+    ],
+    "facts": [
+      "Destination: Hopper Valley",
+      "Region: Gilgit-Baltistan",
+      "Country: Pakistan"
+    ],
+    "slug": "hopper-valley",
+    "budget": "To be researched",
+    "highlights": [
+      "Hopper Valley",
+      "Gilgit-Baltistan",
+      "Pakistan"
+    ]
+  },
+  {
+    "name": "Bagrote Valley",
+    "country": "PAKISTAN",
+    "region": "Gilgit-Baltistan",
+    "description": "Bagrote Valley is a destination in Gilgit-Baltistan, Pakistan. Explore its scenery, local character and nearby attractions with Tour Tourist.",
+    "bestTime": "Best time depends on the season and activities. Check local conditions before travelling.",
+    "type": "Nature & Travel",
+    "activities": [
+      "Sightseeing",
+      "Photography",
+      "Explore local attractions",
+      "Enjoy the scenery"
+    ],
+    "facts": [
+      "Destination: Bagrote Valley",
+      "Region: Gilgit-Baltistan",
+      "Country: Pakistan"
+    ],
+    "slug": "bagrote-valley",
+    "budget": "To be researched",
+    "highlights": [
+      "Bagrote Valley",
+      "Gilgit-Baltistan",
+      "Pakistan"
+    ]
+  },
+  {
+    "name": "Khalti Lake",
+    "country": "PAKISTAN",
+    "region": "Gilgit-Baltistan",
+    "description": "Khalti Lake is a destination in Gilgit-Baltistan, Pakistan. Explore its scenery, local character and nearby attractions with Tour Tourist.",
+    "bestTime": "Best time depends on the season and activities. Check local conditions before travelling.",
+    "type": "Nature & Travel",
+    "activities": [
+      "Sightseeing",
+      "Photography",
+      "Explore local attractions",
+      "Enjoy the scenery"
+    ],
+    "facts": [
+      "Destination: Khalti Lake",
+      "Region: Gilgit-Baltistan",
+      "Country: Pakistan"
+    ],
+    "slug": "khalti-lake",
+    "budget": "To be researched",
+    "highlights": [
+      "Khalti Lake",
+      "Gilgit-Baltistan",
+      "Pakistan"
+    ]
+  },
+  {
+    "name": "Karamber Lake",
+    "country": "PAKISTAN",
+    "region": "Gilgit-Baltistan",
+    "description": "Karamber Lake is a destination in Gilgit-Baltistan, Pakistan. Explore its scenery, local character and nearby attractions with Tour Tourist.",
+    "bestTime": "Best time depends on the season and activities. Check local conditions before travelling.",
+    "type": "Nature & Travel",
+    "activities": [
+      "Sightseeing",
+      "Photography",
+      "Explore local attractions",
+      "Enjoy the scenery"
+    ],
+    "facts": [
+      "Destination: Karamber Lake",
+      "Region: Gilgit-Baltistan",
+      "Country: Pakistan"
+    ],
+    "slug": "karamber-lake",
+    "budget": "To be researched",
+    "highlights": [
+      "Karamber Lake",
+      "Gilgit-Baltistan",
+      "Pakistan"
+    ]
+  },
+  {
+    "name": "Kargah Valley",
+    "country": "PAKISTAN",
+    "region": "Gilgit-Baltistan",
+    "description": "Kargah Valley is a destination in Gilgit-Baltistan, Pakistan. Explore its scenery, local character and nearby attractions with Tour Tourist.",
+    "bestTime": "Best time depends on the season and activities. Check local conditions before travelling.",
+    "type": "Nature & Travel",
+    "activities": [
+      "Sightseeing",
+      "Photography",
+      "Explore local attractions",
+      "Enjoy the scenery"
+    ],
+    "facts": [
+      "Destination: Kargah Valley",
+      "Region: Gilgit-Baltistan",
+      "Country: Pakistan"
+    ],
+    "slug": "kargah-valley",
+    "budget": "To be researched",
+    "highlights": [
+      "Kargah Valley",
+      "Gilgit-Baltistan",
+      "Pakistan"
+    ]
+  },
+  {
+    "name": "Kumrat Valley",
+    "country": "PAKISTAN",
+    "region": "Khyber Pakhtunkhwa",
+    "description": "Kumrat Valley is a destination in Khyber Pakhtunkhwa, Pakistan. Explore its scenery, local character and nearby attractions with Tour Tourist.",
+    "bestTime": "Best time depends on the season and activities. Check local conditions before travelling.",
+    "type": "Nature & Travel",
+    "activities": [
+      "Sightseeing",
+      "Photography",
+      "Explore local attractions",
+      "Enjoy the scenery"
+    ],
+    "facts": [
+      "Destination: Kumrat Valley",
+      "Region: Khyber Pakhtunkhwa",
+      "Country: Pakistan"
+    ],
+    "slug": "kumrat-valley",
+    "budget": "To be researched",
+    "highlights": [
+      "Kumrat Valley",
+      "Khyber Pakhtunkhwa",
+      "Pakistan"
+    ]
+  },
+  {
+    "name": "Swat Valley",
+    "country": "PAKISTAN",
+    "region": "Khyber Pakhtunkhwa",
+    "description": "Swat Valley is a destination in Khyber Pakhtunkhwa, Pakistan. Explore its scenery, local character and nearby attractions with Tour Tourist.",
+    "bestTime": "Best time depends on the season and activities. Check local conditions before travelling.",
+    "type": "Nature & Travel",
+    "activities": [
+      "Sightseeing",
+      "Photography",
+      "Explore local attractions",
+      "Enjoy the scenery"
+    ],
+    "facts": [
+      "Destination: Swat Valley",
+      "Region: Khyber Pakhtunkhwa",
+      "Country: Pakistan"
+    ],
+    "slug": "swat-valley",
+    "budget": "To be researched",
+    "highlights": [
+      "Swat Valley",
+      "Khyber Pakhtunkhwa",
+      "Pakistan"
+    ]
+  },
+  {
+    "name": "Kalam",
+    "country": "PAKISTAN",
+    "region": "Khyber Pakhtunkhwa",
+    "description": "Kalam is a destination in Khyber Pakhtunkhwa, Pakistan. Explore its scenery, local character and nearby attractions with Tour Tourist.",
+    "bestTime": "Best time depends on the season and activities. Check local conditions before travelling.",
+    "type": "Nature & Travel",
+    "activities": [
+      "Sightseeing",
+      "Photography",
+      "Explore local attractions",
+      "Enjoy the scenery"
+    ],
+    "facts": [
+      "Destination: Kalam",
+      "Region: Khyber Pakhtunkhwa",
+      "Country: Pakistan"
+    ],
+    "slug": "kalam",
+    "budget": "To be researched",
+    "highlights": [
+      "Kalam",
+      "Khyber Pakhtunkhwa",
+      "Pakistan"
+    ]
+  },
+  {
+    "name": "Mahodand Lake",
+    "country": "PAKISTAN",
+    "region": "Khyber Pakhtunkhwa",
+    "description": "Mahodand Lake is a destination in Khyber Pakhtunkhwa, Pakistan. Explore its scenery, local character and nearby attractions with Tour Tourist.",
+    "bestTime": "Best time depends on the season and activities. Check local conditions before travelling.",
+    "type": "Nature & Travel",
+    "activities": [
+      "Sightseeing",
+      "Photography",
+      "Explore local attractions",
+      "Enjoy the scenery"
+    ],
+    "facts": [
+      "Destination: Mahodand Lake",
+      "Region: Khyber Pakhtunkhwa",
+      "Country: Pakistan"
+    ],
+    "slug": "mahodand-lake",
+    "budget": "To be researched",
+    "highlights": [
+      "Mahodand Lake",
+      "Khyber Pakhtunkhwa",
+      "Pakistan"
+    ]
+  },
+  {
+    "name": "Chitral Valley",
+    "country": "PAKISTAN",
+    "region": "Khyber Pakhtunkhwa",
+    "description": "Chitral Valley is a destination in Khyber Pakhtunkhwa, Pakistan. Explore its scenery, local character and nearby attractions with Tour Tourist.",
+    "bestTime": "Best time depends on the season and activities. Check local conditions before travelling.",
+    "type": "Nature & Travel",
+    "activities": [
+      "Sightseeing",
+      "Photography",
+      "Explore local attractions",
+      "Enjoy the scenery"
+    ],
+    "facts": [
+      "Destination: Chitral Valley",
+      "Region: Khyber Pakhtunkhwa",
+      "Country: Pakistan"
+    ],
+    "slug": "chitral-valley",
+    "budget": "To be researched",
+    "highlights": [
+      "Chitral Valley",
+      "Khyber Pakhtunkhwa",
+      "Pakistan"
+    ]
+  },
+  {
+    "name": "Kalash Valley",
+    "country": "PAKISTAN",
+    "region": "Khyber Pakhtunkhwa",
+    "description": "Kalash Valley is a destination in Khyber Pakhtunkhwa, Pakistan. Explore its scenery, local character and nearby attractions with Tour Tourist.",
+    "bestTime": "Best time depends on the season and activities. Check local conditions before travelling.",
+    "type": "Nature & Travel",
+    "activities": [
+      "Sightseeing",
+      "Photography",
+      "Explore local attractions",
+      "Enjoy the scenery"
+    ],
+    "facts": [
+      "Destination: Kalash Valley",
+      "Region: Khyber Pakhtunkhwa",
+      "Country: Pakistan"
+    ],
+    "slug": "kalash-valley",
+    "budget": "To be researched",
+    "highlights": [
+      "Kalash Valley",
+      "Khyber Pakhtunkhwa",
+      "Pakistan"
+    ]
+  },
+  {
+    "name": "Naran",
+    "country": "PAKISTAN",
+    "region": "Khyber Pakhtunkhwa",
+    "description": "Naran is a destination in Khyber Pakhtunkhwa, Pakistan. Explore its scenery, local character and nearby attractions with Tour Tourist.",
+    "bestTime": "Best time depends on the season and activities. Check local conditions before travelling.",
+    "type": "Nature & Travel",
+    "activities": [
+      "Sightseeing",
+      "Photography",
+      "Explore local attractions",
+      "Enjoy the scenery"
+    ],
+    "facts": [
+      "Destination: Naran",
+      "Region: Khyber Pakhtunkhwa",
+      "Country: Pakistan"
+    ],
+    "slug": "naran",
+    "budget": "To be researched",
+    "highlights": [
+      "Naran",
+      "Khyber Pakhtunkhwa",
+      "Pakistan"
+    ]
+  },
+  {
+    "name": "Neelum Valley",
+    "country": "PAKISTAN",
+    "region": "Azad Kashmir",
+    "description": "Neelum Valley is a destination in Azad Kashmir, Pakistan. Explore its scenery, local character and nearby attractions with Tour Tourist.",
+    "bestTime": "Best time depends on the season and activities. Check local conditions before travelling.",
+    "type": "Nature & Travel",
+    "activities": [
+      "Sightseeing",
+      "Photography",
+      "Explore local attractions",
+      "Enjoy the scenery"
+    ],
+    "facts": [
+      "Destination: Neelum Valley",
+      "Region: Azad Kashmir",
+      "Country: Pakistan"
+    ],
+    "slug": "neelum-valley",
+    "budget": "To be researched",
+    "highlights": [
+      "Neelum Valley",
+      "Azad Kashmir",
+      "Pakistan"
+    ]
+  },
+  {
+    "name": "Murree",
+    "country": "PAKISTAN",
+    "region": "Punjab",
+    "description": "Murree is a destination in Punjab, Pakistan. Explore its scenery, local character and nearby attractions with Tour Tourist.",
+    "bestTime": "Best time depends on the season and activities. Check local conditions before travelling.",
+    "type": "Nature & Travel",
+    "activities": [
+      "Sightseeing",
+      "Photography",
+      "Explore local attractions",
+      "Enjoy the scenery"
+    ],
+    "facts": [
+      "Destination: Murree",
+      "Region: Punjab",
+      "Country: Pakistan"
+    ],
+    "slug": "murree",
+    "budget": "To be researched",
+    "highlights": [
+      "Murree",
+      "Punjab",
+      "Pakistan"
+    ]
+  },
+  {
+    "name": "Mohenjo-daro",
+    "country": "PAKISTAN",
+    "region": "Sindh",
+    "description": "Mohenjo-daro is a destination in Sindh, Pakistan. Explore its scenery, local character and nearby attractions with Tour Tourist.",
+    "bestTime": "Best time depends on the season and activities. Check local conditions before travelling.",
+    "type": "Nature & Travel",
+    "activities": [
+      "Sightseeing",
+      "Photography",
+      "Explore local attractions",
+      "Enjoy the scenery"
+    ],
+    "facts": [
+      "Destination: Mohenjo-daro",
+      "Region: Sindh",
+      "Country: Pakistan"
+    ],
+    "slug": "mohenjo-daro",
+    "budget": "To be researched",
+    "highlights": [
+      "Mohenjo-daro",
+      "Sindh",
+      "Pakistan"
+    ]
+  },
+  {
+    "name": "Tokyo",
+    "country": "JAPAN",
+    "region": "Kanto",
+    "description": "Tokyo is a destination in Kanto, Japan. Explore its scenery, local character and nearby attractions with Tour Tourist.",
+    "bestTime": "Best time depends on the season and activities. Check local conditions before travelling.",
+    "type": "Nature & Travel",
+    "activities": [
+      "Sightseeing",
+      "Photography",
+      "Explore local attractions",
+      "Enjoy the scenery"
+    ],
+    "facts": [
+      "Destination: Tokyo",
+      "Region: Kanto",
+      "Country: Japan"
+    ],
+    "slug": "tokyo",
+    "budget": "To be researched",
+    "highlights": [
+      "Tokyo",
+      "Kanto",
+      "Japan"
+    ]
+  },
+  {
+    "name": "Kyoto",
+    "country": "JAPAN",
+    "region": "Kansai",
+    "description": "Kyoto is a destination in Kansai, Japan. Explore its scenery, local character and nearby attractions with Tour Tourist.",
+    "bestTime": "Best time depends on the season and activities. Check local conditions before travelling.",
+    "type": "Nature & Travel",
+    "activities": [
+      "Sightseeing",
+      "Photography",
+      "Explore local attractions",
+      "Enjoy the scenery"
+    ],
+    "facts": [
+      "Destination: Kyoto",
+      "Region: Kansai",
+      "Country: Japan"
+    ],
+    "slug": "kyoto",
+    "budget": "To be researched",
+    "highlights": [
+      "Kyoto",
+      "Kansai",
+      "Japan"
+    ]
+  },
+  {
+    "name": "Osaka",
+    "country": "JAPAN",
+    "region": "Kansai",
+    "description": "Osaka is a destination in Kansai, Japan. Explore its scenery, local character and nearby attractions with Tour Tourist.",
+    "bestTime": "Best time depends on the season and activities. Check local conditions before travelling.",
+    "type": "Nature & Travel",
+    "activities": [
+      "Sightseeing",
+      "Photography",
+      "Explore local attractions",
+      "Enjoy the scenery"
+    ],
+    "facts": [
+      "Destination: Osaka",
+      "Region: Kansai",
+      "Country: Japan"
+    ],
+    "slug": "osaka",
+    "budget": "To be researched",
+    "highlights": [
+      "Osaka",
+      "Kansai",
+      "Japan"
+    ]
+  },
+  {
+    "name": "Mount Fuji",
+    "country": "JAPAN",
+    "region": "Chubu",
+    "description": "Mount Fuji is a destination in Chubu, Japan. Explore its scenery, local character and nearby attractions with Tour Tourist.",
+    "bestTime": "Best time depends on the season and activities. Check local conditions before travelling.",
+    "type": "Nature & Travel",
+    "activities": [
+      "Sightseeing",
+      "Photography",
+      "Explore local attractions",
+      "Enjoy the scenery"
+    ],
+    "facts": [
+      "Destination: Mount Fuji",
+      "Region: Chubu",
+      "Country: Japan"
+    ],
+    "slug": "mount-fuji",
+    "budget": "To be researched",
+    "highlights": [
+      "Mount Fuji",
+      "Chubu",
+      "Japan"
+    ]
+  },
+  {
+    "name": "Nara",
+    "country": "JAPAN",
+    "region": "Kansai",
+    "description": "Nara is a destination in Kansai, Japan. Explore its scenery, local character and nearby attractions with Tour Tourist.",
+    "bestTime": "Best time depends on the season and activities. Check local conditions before travelling.",
+    "type": "Nature & Travel",
+    "activities": [
+      "Sightseeing",
+      "Photography",
+      "Explore local attractions",
+      "Enjoy the scenery"
+    ],
+    "facts": [
+      "Destination: Nara",
+      "Region: Kansai",
+      "Country: Japan"
+    ],
+    "slug": "nara",
+    "budget": "To be researched",
+    "highlights": [
+      "Nara",
+      "Kansai",
+      "Japan"
+    ]
+  },
+  {
+    "name": "Hiroshima",
+    "country": "JAPAN",
+    "region": "Chugoku",
+    "description": "Hiroshima is a destination in Chugoku, Japan. Explore its scenery, local character and nearby attractions with Tour Tourist.",
+    "bestTime": "Best time depends on the season and activities. Check local conditions before travelling.",
+    "type": "Nature & Travel",
+    "activities": [
+      "Sightseeing",
+      "Photography",
+      "Explore local attractions",
+      "Enjoy the scenery"
+    ],
+    "facts": [
+      "Destination: Hiroshima",
+      "Region: Chugoku",
+      "Country: Japan"
+    ],
+    "slug": "hiroshima",
+    "budget": "To be researched",
+    "highlights": [
+      "Hiroshima",
+      "Chugoku",
+      "Japan"
+    ]
+  },
+  {
+    "name": "Sapporo",
+    "country": "JAPAN",
+    "region": "Hokkaido",
+    "description": "Sapporo is a destination in Hokkaido, Japan. Explore its scenery, local character and nearby attractions with Tour Tourist.",
+    "bestTime": "Best time depends on the season and activities. Check local conditions before travelling.",
+    "type": "Nature & Travel",
+    "activities": [
+      "Sightseeing",
+      "Photography",
+      "Explore local attractions",
+      "Enjoy the scenery"
+    ],
+    "facts": [
+      "Destination: Sapporo",
+      "Region: Hokkaido",
+      "Country: Japan"
+    ],
+    "slug": "sapporo",
+    "budget": "To be researched",
+    "highlights": [
+      "Sapporo",
+      "Hokkaido",
+      "Japan"
+    ]
+  },
+  {
+    "name": "Hakodate",
+    "country": "JAPAN",
+    "region": "Hokkaido",
+    "description": "Hakodate is a destination in Hokkaido, Japan. Explore its scenery, local character and nearby attractions with Tour Tourist.",
+    "bestTime": "Best time depends on the season and activities. Check local conditions before travelling.",
+    "type": "Nature & Travel",
+    "activities": [
+      "Sightseeing",
+      "Photography",
+      "Explore local attractions",
+      "Enjoy the scenery"
+    ],
+    "facts": [
+      "Destination: Hakodate",
+      "Region: Hokkaido",
+      "Country: Japan"
+    ],
+    "slug": "hakodate",
+    "budget": "To be researched",
+    "highlights": [
+      "Hakodate",
+      "Hokkaido",
+      "Japan"
+    ]
+  },
+  {
+    "name": "Furano",
+    "country": "JAPAN",
+    "region": "Hokkaido",
+    "description": "Furano is a destination in Hokkaido, Japan. Explore its scenery, local character and nearby attractions with Tour Tourist.",
+    "bestTime": "Best time depends on the season and activities. Check local conditions before travelling.",
+    "type": "Nature & Travel",
+    "activities": [
+      "Sightseeing",
+      "Photography",
+      "Explore local attractions",
+      "Enjoy the scenery"
+    ],
+    "facts": [
+      "Destination: Furano",
+      "Region: Hokkaido",
+      "Country: Japan"
+    ],
+    "slug": "furano",
+    "budget": "To be researched",
+    "highlights": [
+      "Furano",
+      "Hokkaido",
+      "Japan"
+    ]
+  },
+  {
+    "name": "Kushiro",
+    "country": "JAPAN",
+    "region": "Hokkaido",
+    "description": "Kushiro is a destination in Hokkaido, Japan. Explore its scenery, local character and nearby attractions with Tour Tourist.",
+    "bestTime": "Best time depends on the season and activities. Check local conditions before travelling.",
+    "type": "Nature & Travel",
+    "activities": [
+      "Sightseeing",
+      "Photography",
+      "Explore local attractions",
+      "Enjoy the scenery"
+    ],
+    "facts": [
+      "Destination: Kushiro",
+      "Region: Hokkaido",
+      "Country: Japan"
+    ],
+    "slug": "kushiro",
+    "budget": "To be researched",
+    "highlights": [
+      "Kushiro",
+      "Hokkaido",
+      "Japan"
+    ]
+  },
+  {
+    "name": "Niseko",
+    "country": "JAPAN",
+    "region": "Hokkaido",
+    "description": "Niseko is a destination in Hokkaido, Japan. Explore its scenery, local character and nearby attractions with Tour Tourist.",
+    "bestTime": "Best time depends on the season and activities. Check local conditions before travelling.",
+    "type": "Nature & Travel",
+    "activities": [
+      "Sightseeing",
+      "Photography",
+      "Explore local attractions",
+      "Enjoy the scenery"
+    ],
+    "facts": [
+      "Destination: Niseko",
+      "Region: Hokkaido",
+      "Country: Japan"
+    ],
+    "slug": "niseko",
+    "budget": "To be researched",
+    "highlights": [
+      "Niseko",
+      "Hokkaido",
+      "Japan"
+    ]
+  },
+  {
+    "name": "Aomori",
+    "country": "JAPAN",
+    "region": "Tohoku",
+    "description": "Aomori is a destination in Tohoku, Japan. Explore its scenery, local character and nearby attractions with Tour Tourist.",
+    "bestTime": "Best time depends on the season and activities. Check local conditions before travelling.",
+    "type": "Nature & Travel",
+    "activities": [
+      "Sightseeing",
+      "Photography",
+      "Explore local attractions",
+      "Enjoy the scenery"
+    ],
+    "facts": [
+      "Destination: Aomori",
+      "Region: Tohoku",
+      "Country: Japan"
+    ],
+    "slug": "aomori",
+    "budget": "To be researched",
+    "highlights": [
+      "Aomori",
+      "Tohoku",
+      "Japan"
+    ]
+  },
+  {
+    "name": "Sendai",
+    "country": "JAPAN",
+    "region": "Tohoku",
+    "description": "Sendai is a destination in Tohoku, Japan. Explore its scenery, local character and nearby attractions with Tour Tourist.",
+    "bestTime": "Best time depends on the season and activities. Check local conditions before travelling.",
+    "type": "Nature & Travel",
+    "activities": [
+      "Sightseeing",
+      "Photography",
+      "Explore local attractions",
+      "Enjoy the scenery"
+    ],
+    "facts": [
+      "Destination: Sendai",
+      "Region: Tohoku",
+      "Country: Japan"
+    ],
+    "slug": "sendai",
+    "budget": "To be researched",
+    "highlights": [
+      "Sendai",
+      "Tohoku",
+      "Japan"
+    ]
+  },
+  {
+    "name": "Fukushima",
+    "country": "JAPAN",
+    "region": "Tohoku",
+    "description": "Fukushima is a destination in Tohoku, Japan. Explore its scenery, local character and nearby attractions with Tour Tourist.",
+    "bestTime": "Best time depends on the season and activities. Check local conditions before travelling.",
+    "type": "Nature & Travel",
+    "activities": [
+      "Sightseeing",
+      "Photography",
+      "Explore local attractions",
+      "Enjoy the scenery"
+    ],
+    "facts": [
+      "Destination: Fukushima",
+      "Region: Tohoku",
+      "Country: Japan"
+    ],
+    "slug": "fukushima",
+    "budget": "To be researched",
+    "highlights": [
+      "Fukushima",
+      "Tohoku",
+      "Japan"
+    ]
+  },
+  {
+    "name": "Nikko",
+    "country": "JAPAN",
+    "region": "Kanto",
+    "description": "Nikko is a destination in Kanto, Japan. Explore its scenery, local character and nearby attractions with Tour Tourist.",
+    "bestTime": "Best time depends on the season and activities. Check local conditions before travelling.",
+    "type": "Nature & Travel",
+    "activities": [
+      "Sightseeing",
+      "Photography",
+      "Explore local attractions",
+      "Enjoy the scenery"
+    ],
+    "facts": [
+      "Destination: Nikko",
+      "Region: Kanto",
+      "Country: Japan"
+    ],
+    "slug": "nikko",
+    "budget": "To be researched",
+    "highlights": [
+      "Nikko",
+      "Kanto",
+      "Japan"
+    ]
+  },
+  {
+    "name": "Karuizawa",
+    "country": "JAPAN",
+    "region": "Nagano",
+    "description": "Karuizawa is a destination in Nagano, Japan. Explore its scenery, local character and nearby attractions with Tour Tourist.",
+    "bestTime": "Best time depends on the season and activities. Check local conditions before travelling.",
+    "type": "Nature & Travel",
+    "activities": [
+      "Sightseeing",
+      "Photography",
+      "Explore local attractions",
+      "Enjoy the scenery"
+    ],
+    "facts": [
+      "Destination: Karuizawa",
+      "Region: Nagano",
+      "Country: Japan"
+    ],
+    "slug": "karuizawa",
+    "budget": "To be researched",
+    "highlights": [
+      "Karuizawa",
+      "Nagano",
+      "Japan"
+    ]
+  },
+  {
+    "name": "Hakone",
+    "country": "JAPAN",
+    "region": "Kanagawa",
+    "description": "Hakone is a destination in Kanagawa, Japan. Explore its scenery, local character and nearby attractions with Tour Tourist.",
+    "bestTime": "Best time depends on the season and activities. Check local conditions before travelling.",
+    "type": "Nature & Travel",
+    "activities": [
+      "Sightseeing",
+      "Photography",
+      "Explore local attractions",
+      "Enjoy the scenery"
+    ],
+    "facts": [
+      "Destination: Hakone",
+      "Region: Kanagawa",
+      "Country: Japan"
+    ],
+    "slug": "hakone",
+    "budget": "To be researched",
+    "highlights": [
+      "Hakone",
+      "Kanagawa",
+      "Japan"
+    ]
+  },
+  {
+    "name": "Kanazawa",
+    "country": "JAPAN",
+    "region": "Ishikawa",
+    "description": "Kanazawa is a destination in Ishikawa, Japan. Explore its scenery, local character and nearby attractions with Tour Tourist.",
+    "bestTime": "Best time depends on the season and activities. Check local conditions before travelling.",
+    "type": "Nature & Travel",
+    "activities": [
+      "Sightseeing",
+      "Photography",
+      "Explore local attractions",
+      "Enjoy the scenery"
+    ],
+    "facts": [
+      "Destination: Kanazawa",
+      "Region: Ishikawa",
+      "Country: Japan"
+    ],
+    "slug": "kanazawa",
+    "budget": "To be researched",
+    "highlights": [
+      "Kanazawa",
+      "Ishikawa",
+      "Japan"
+    ]
+  },
+  {
+    "name": "Takayama",
+    "country": "JAPAN",
+    "region": "Gifu",
+    "description": "Takayama is a destination in Gifu, Japan. Explore its scenery, local character and nearby attractions with Tour Tourist.",
+    "bestTime": "Best time depends on the season and activities. Check local conditions before travelling.",
+    "type": "Nature & Travel",
+    "activities": [
+      "Sightseeing",
+      "Photography",
+      "Explore local attractions",
+      "Enjoy the scenery"
+    ],
+    "facts": [
+      "Destination: Takayama",
+      "Region: Gifu",
+      "Country: Japan"
+    ],
+    "slug": "takayama",
+    "budget": "To be researched",
+    "highlights": [
+      "Takayama",
+      "Gifu",
+      "Japan"
+    ]
+  },
+  {
+    "name": "Nagoya",
+    "country": "JAPAN",
+    "region": "Aichi",
+    "description": "Nagoya is a destination in Aichi, Japan. Explore its scenery, local character and nearby attractions with Tour Tourist.",
+    "bestTime": "Best time depends on the season and activities. Check local conditions before travelling.",
+    "type": "Nature & Travel",
+    "activities": [
+      "Sightseeing",
+      "Photography",
+      "Explore local attractions",
+      "Enjoy the scenery"
+    ],
+    "facts": [
+      "Destination: Nagoya",
+      "Region: Aichi",
+      "Country: Japan"
+    ],
+    "slug": "nagoya",
+    "budget": "To be researched",
+    "highlights": [
+      "Nagoya",
+      "Aichi",
+      "Japan"
+    ]
+  },
+  {
+    "name": "Kobe",
+    "country": "JAPAN",
+    "region": "Hyogo",
+    "description": "Kobe is a destination in Hyogo, Japan. Explore its scenery, local character and nearby attractions with Tour Tourist.",
+    "bestTime": "Best time depends on the season and activities. Check local conditions before travelling.",
+    "type": "Nature & Travel",
+    "activities": [
+      "Sightseeing",
+      "Photography",
+      "Explore local attractions",
+      "Enjoy the scenery"
+    ],
+    "facts": [
+      "Destination: Kobe",
+      "Region: Hyogo",
+      "Country: Japan"
+    ],
+    "slug": "kobe",
+    "budget": "To be researched",
+    "highlights": [
+      "Kobe",
+      "Hyogo",
+      "Japan"
+    ]
+  },
+  {
+    "name": "Himeji",
+    "country": "JAPAN",
+    "region": "Hyogo",
+    "description": "Himeji is a destination in Hyogo, Japan. Explore its scenery, local character and nearby attractions with Tour Tourist.",
+    "bestTime": "Best time depends on the season and activities. Check local conditions before travelling.",
+    "type": "Nature & Travel",
+    "activities": [
+      "Sightseeing",
+      "Photography",
+      "Explore local attractions",
+      "Enjoy the scenery"
+    ],
+    "facts": [
+      "Destination: Himeji",
+      "Region: Hyogo",
+      "Country: Japan"
+    ],
+    "slug": "himeji",
+    "budget": "To be researched",
+    "highlights": [
+      "Himeji",
+      "Hyogo",
+      "Japan"
+    ]
+  },
+  {
+    "name": "Shikoku",
+    "country": "JAPAN",
+    "region": "Shikoku",
+    "description": "Shikoku is a destination in Shikoku, Japan. Explore its scenery, local character and nearby attractions with Tour Tourist.",
+    "bestTime": "Best time depends on the season and activities. Check local conditions before travelling.",
+    "type": "Nature & Travel",
+    "activities": [
+      "Sightseeing",
+      "Photography",
+      "Explore local attractions",
+      "Enjoy the scenery"
+    ],
+    "facts": [
+      "Destination: Shikoku",
+      "Region: Shikoku",
+      "Country: Japan"
+    ],
+    "slug": "shikoku",
+    "budget": "To be researched",
+    "highlights": [
+      "Shikoku",
+      "Shikoku",
+      "Japan"
+    ]
+  },
+  {
+    "name": "Kumano Kodo",
+    "country": "JAPAN",
+    "region": "Kansai",
+    "description": "Kumano Kodo is a destination in Kansai, Japan. Explore its scenery, local character and nearby attractions with Tour Tourist.",
+    "bestTime": "Best time depends on the season and activities. Check local conditions before travelling.",
+    "type": "Nature & Travel",
+    "activities": [
+      "Sightseeing",
+      "Photography",
+      "Explore local attractions",
+      "Enjoy the scenery"
+    ],
+    "facts": [
+      "Destination: Kumano Kodo",
+      "Region: Kansai",
+      "Country: Japan"
+    ],
+    "slug": "kumano-kodo",
+    "budget": "To be researched",
+    "highlights": [
+      "Kumano Kodo",
+      "Kansai",
+      "Japan"
+    ]
+  },
+  {
+    "name": "Yakushima",
+    "country": "JAPAN",
+    "region": "Kagoshima",
+    "description": "Yakushima is a destination in Kagoshima, Japan. Explore its scenery, local character and nearby attractions with Tour Tourist.",
+    "bestTime": "Best time depends on the season and activities. Check local conditions before travelling.",
+    "type": "Nature & Travel",
+    "activities": [
+      "Sightseeing",
+      "Photography",
+      "Explore local attractions",
+      "Enjoy the scenery"
+    ],
+    "facts": [
+      "Destination: Yakushima",
+      "Region: Kagoshima",
+      "Country: Japan"
+    ],
+    "slug": "yakushima",
+    "budget": "To be researched",
+    "highlights": [
+      "Yakushima",
+      "Kagoshima",
+      "Japan"
+    ]
+  },
+  {
+    "name": "Shirakami Sanchi",
+    "country": "JAPAN",
+    "region": "Tohoku",
+    "description": "Shirakami Sanchi is a destination in Tohoku, Japan. Explore its scenery, local character and nearby attractions with Tour Tourist.",
+    "bestTime": "Best time depends on the season and activities. Check local conditions before travelling.",
+    "type": "Nature & Travel",
+    "activities": [
+      "Sightseeing",
+      "Photography",
+      "Explore local attractions",
+      "Enjoy the scenery"
+    ],
+    "facts": [
+      "Destination: Shirakami Sanchi",
+      "Region: Tohoku",
+      "Country: Japan"
+    ],
+    "slug": "shirakami-sanchi",
+    "budget": "To be researched",
+    "highlights": [
+      "Shirakami Sanchi",
+      "Tohoku",
+      "Japan"
+    ]
+  },
+  {
+    "name": "Beppu",
+    "country": "JAPAN",
+    "region": "Oita",
+    "description": "Beppu is a destination in Oita, Japan. Explore its scenery, local character and nearby attractions with Tour Tourist.",
+    "bestTime": "Best time depends on the season and activities. Check local conditions before travelling.",
+    "type": "Nature & Travel",
+    "activities": [
+      "Sightseeing",
+      "Photography",
+      "Explore local attractions",
+      "Enjoy the scenery"
+    ],
+    "facts": [
+      "Destination: Beppu",
+      "Region: Oita",
+      "Country: Japan"
+    ],
+    "slug": "beppu",
+    "budget": "To be researched",
+    "highlights": [
+      "Beppu",
+      "Oita",
+      "Japan"
+    ]
+  },
+  {
+    "name": "Nagasaki",
+    "country": "JAPAN",
+    "region": "Nagasaki",
+    "description": "Nagasaki is a destination in Nagasaki, Japan. Explore its scenery, local character and nearby attractions with Tour Tourist.",
+    "bestTime": "Best time depends on the season and activities. Check local conditions before travelling.",
+    "type": "Nature & Travel",
+    "activities": [
+      "Sightseeing",
+      "Photography",
+      "Explore local attractions",
+      "Enjoy the scenery"
+    ],
+    "facts": [
+      "Destination: Nagasaki",
+      "Region: Nagasaki",
+      "Country: Japan"
+    ],
+    "slug": "nagasaki",
+    "budget": "To be researched",
+    "highlights": [
+      "Nagasaki",
+      "Nagasaki",
+      "Japan"
+    ]
+  },
+  {
+    "name": "Okinawa",
+    "country": "JAPAN",
+    "region": "Okinawa",
+    "description": "Okinawa is a destination in Okinawa, Japan. Explore its scenery, local character and nearby attractions with Tour Tourist.",
+    "bestTime": "Best time depends on the season and activities. Check local conditions before travelling.",
+    "type": "Nature & Travel",
+    "activities": [
+      "Sightseeing",
+      "Photography",
+      "Explore local attractions",
+      "Enjoy the scenery"
+    ],
+    "facts": [
+      "Destination: Okinawa",
+      "Region: Okinawa",
+      "Country: Japan"
+    ],
+    "slug": "okinawa",
+    "budget": "To be researched",
+    "highlights": [
+      "Okinawa",
+      "Okinawa",
+      "Japan"
+    ]
+  },
+  {
+    "name": "Ishigaki Island",
+    "country": "JAPAN",
+    "region": "Okinawa",
+    "description": "Ishigaki Island is a destination in Okinawa, Japan. Explore its scenery, local character and nearby attractions with Tour Tourist.",
+    "bestTime": "Best time depends on the season and activities. Check local conditions before travelling.",
+    "type": "Nature & Travel",
+    "activities": [
+      "Sightseeing",
+      "Photography",
+      "Explore local attractions",
+      "Enjoy the scenery"
+    ],
+    "facts": [
+      "Destination: Ishigaki Island",
+      "Region: Okinawa",
+      "Country: Japan"
+    ],
+    "slug": "ishigaki-island",
+    "budget": "To be researched",
+    "highlights": [
+      "Ishigaki Island",
+      "Okinawa",
+      "Japan"
+    ]
+  },
+  {
+    "name": "Zurich",
+    "country": "SWITZERLAND",
+    "region": "Zurich",
+    "description": "Zurich is a destination in Zurich, Switzerland. Explore its scenery, local character and nearby attractions with Tour Tourist.",
+    "bestTime": "Best time depends on the season and activities. Check local conditions before travelling.",
+    "type": "Nature & Travel",
+    "activities": [
+      "Sightseeing",
+      "Photography",
+      "Explore local attractions",
+      "Enjoy the scenery"
+    ],
+    "facts": [
+      "Destination: Zurich",
+      "Region: Zurich",
+      "Country: Switzerland"
+    ],
+    "slug": "zurich",
+    "budget": "To be researched",
+    "highlights": [
+      "Zurich",
+      "Zurich",
+      "Switzerland"
+    ]
+  },
+  {
+    "name": "Geneva",
+    "country": "SWITZERLAND",
+    "region": "Geneva",
+    "description": "Geneva is a destination in Geneva, Switzerland. Explore its scenery, local character and nearby attractions with Tour Tourist.",
+    "bestTime": "Best time depends on the season and activities. Check local conditions before travelling.",
+    "type": "Nature & Travel",
+    "activities": [
+      "Sightseeing",
+      "Photography",
+      "Explore local attractions",
+      "Enjoy the scenery"
+    ],
+    "facts": [
+      "Destination: Geneva",
+      "Region: Geneva",
+      "Country: Switzerland"
+    ],
+    "slug": "geneva",
+    "budget": "To be researched",
+    "highlights": [
+      "Geneva",
+      "Geneva",
+      "Switzerland"
+    ]
+  },
+  {
+    "name": "Lucerne",
+    "country": "SWITZERLAND",
+    "region": "Lucerne",
+    "description": "Lucerne is a destination in Lucerne, Switzerland. Explore its scenery, local character and nearby attractions with Tour Tourist.",
+    "bestTime": "Best time depends on the season and activities. Check local conditions before travelling.",
+    "type": "Nature & Travel",
+    "activities": [
+      "Sightseeing",
+      "Photography",
+      "Explore local attractions",
+      "Enjoy the scenery"
+    ],
+    "facts": [
+      "Destination: Lucerne",
+      "Region: Lucerne",
+      "Country: Switzerland"
+    ],
+    "slug": "lucerne",
+    "budget": "To be researched",
+    "highlights": [
+      "Lucerne",
+      "Lucerne",
+      "Switzerland"
+    ]
+  },
+  {
+    "name": "Interlaken",
+    "country": "SWITZERLAND",
+    "region": "Bernese Oberland",
+    "description": "Interlaken is a destination in Bernese Oberland, Switzerland. Explore its scenery, local character and nearby attractions with Tour Tourist.",
+    "bestTime": "Best time depends on the season and activities. Check local conditions before travelling.",
+    "type": "Nature & Travel",
+    "activities": [
+      "Sightseeing",
+      "Photography",
+      "Explore local attractions",
+      "Enjoy the scenery"
+    ],
+    "facts": [
+      "Destination: Interlaken",
+      "Region: Bernese Oberland",
+      "Country: Switzerland"
+    ],
+    "slug": "interlaken",
+    "budget": "To be researched",
+    "highlights": [
+      "Interlaken",
+      "Bernese Oberland",
+      "Switzerland"
+    ]
+  },
+  {
+    "name": "Grindelwald",
+    "country": "SWITZERLAND",
+    "region": "Bernese Oberland",
+    "description": "Grindelwald is a destination in Bernese Oberland, Switzerland. Explore its scenery, local character and nearby attractions with Tour Tourist.",
+    "bestTime": "Best time depends on the season and activities. Check local conditions before travelling.",
+    "type": "Nature & Travel",
+    "activities": [
+      "Sightseeing",
+      "Photography",
+      "Explore local attractions",
+      "Enjoy the scenery"
+    ],
+    "facts": [
+      "Destination: Grindelwald",
+      "Region: Bernese Oberland",
+      "Country: Switzerland"
+    ],
+    "slug": "grindelwald",
+    "budget": "To be researched",
+    "highlights": [
+      "Grindelwald",
+      "Bernese Oberland",
+      "Switzerland"
+    ]
+  },
+  {
+    "name": "Lauterbrunnen",
+    "country": "SWITZERLAND",
+    "region": "Bernese Oberland",
+    "description": "Lauterbrunnen is a destination in Bernese Oberland, Switzerland. Explore its scenery, local character and nearby attractions with Tour Tourist.",
+    "bestTime": "Best time depends on the season and activities. Check local conditions before travelling.",
+    "type": "Nature & Travel",
+    "activities": [
+      "Sightseeing",
+      "Photography",
+      "Explore local attractions",
+      "Enjoy the scenery"
+    ],
+    "facts": [
+      "Destination: Lauterbrunnen",
+      "Region: Bernese Oberland",
+      "Country: Switzerland"
+    ],
+    "slug": "lauterbrunnen",
+    "budget": "To be researched",
+    "highlights": [
+      "Lauterbrunnen",
+      "Bernese Oberland",
+      "Switzerland"
+    ]
+  },
+  {
+    "name": "Zermatt",
+    "country": "SWITZERLAND",
+    "region": "Valais",
+    "description": "Zermatt is a destination in Valais, Switzerland. Explore its scenery, local character and nearby attractions with Tour Tourist.",
+    "bestTime": "Best time depends on the season and activities. Check local conditions before travelling.",
+    "type": "Nature & Travel",
+    "activities": [
+      "Sightseeing",
+      "Photography",
+      "Explore local attractions",
+      "Enjoy the scenery"
+    ],
+    "facts": [
+      "Destination: Zermatt",
+      "Region: Valais",
+      "Country: Switzerland"
+    ],
+    "slug": "zermatt",
+    "budget": "To be researched",
+    "highlights": [
+      "Zermatt",
+      "Valais",
+      "Switzerland"
+    ]
+  },
+  {
+    "name": "Jungfraujoch",
+    "country": "SWITZERLAND",
+    "region": "Bernese Oberland",
+    "description": "Jungfraujoch is a destination in Bernese Oberland, Switzerland. Explore its scenery, local character and nearby attractions with Tour Tourist.",
+    "bestTime": "Best time depends on the season and activities. Check local conditions before travelling.",
+    "type": "Nature & Travel",
+    "activities": [
+      "Sightseeing",
+      "Photography",
+      "Explore local attractions",
+      "Enjoy the scenery"
+    ],
+    "facts": [
+      "Destination: Jungfraujoch",
+      "Region: Bernese Oberland",
+      "Country: Switzerland"
+    ],
+    "slug": "jungfraujoch",
+    "budget": "To be researched",
+    "highlights": [
+      "Jungfraujoch",
+      "Bernese Oberland",
+      "Switzerland"
+    ]
+  },
+  {
+    "name": "Bern",
+    "country": "SWITZERLAND",
+    "region": "Bern",
+    "description": "Bern is a destination in Bern, Switzerland. Explore its scenery, local character and nearby attractions with Tour Tourist.",
+    "bestTime": "Best time depends on the season and activities. Check local conditions before travelling.",
+    "type": "Nature & Travel",
+    "activities": [
+      "Sightseeing",
+      "Photography",
+      "Explore local attractions",
+      "Enjoy the scenery"
+    ],
+    "facts": [
+      "Destination: Bern",
+      "Region: Bern",
+      "Country: Switzerland"
+    ],
+    "slug": "bern",
+    "budget": "To be researched",
+    "highlights": [
+      "Bern",
+      "Bern",
+      "Switzerland"
+    ]
+  },
+  {
+    "name": "Lausanne",
+    "country": "SWITZERLAND",
+    "region": "Vaud",
+    "description": "Lausanne is a destination in Vaud, Switzerland. Explore its scenery, local character and nearby attractions with Tour Tourist.",
+    "bestTime": "Best time depends on the season and activities. Check local conditions before travelling.",
+    "type": "Nature & Travel",
+    "activities": [
+      "Sightseeing",
+      "Photography",
+      "Explore local attractions",
+      "Enjoy the scenery"
+    ],
+    "facts": [
+      "Destination: Lausanne",
+      "Region: Vaud",
+      "Country: Switzerland"
+    ],
+    "slug": "lausanne",
+    "budget": "To be researched",
+    "highlights": [
+      "Lausanne",
+      "Vaud",
+      "Switzerland"
+    ]
+  },
+  {
+    "name": "Montreux",
+    "country": "SWITZERLAND",
+    "region": "Vaud",
+    "description": "Montreux is a destination in Vaud, Switzerland. Explore its scenery, local character and nearby attractions with Tour Tourist.",
+    "bestTime": "Best time depends on the season and activities. Check local conditions before travelling.",
+    "type": "Nature & Travel",
+    "activities": [
+      "Sightseeing",
+      "Photography",
+      "Explore local attractions",
+      "Enjoy the scenery"
+    ],
+    "facts": [
+      "Destination: Montreux",
+      "Region: Vaud",
+      "Country: Switzerland"
+    ],
+    "slug": "montreux",
+    "budget": "To be researched",
+    "highlights": [
+      "Montreux",
+      "Vaud",
+      "Switzerland"
+    ]
+  },
+  {
+    "name": "St. Moritz",
+    "country": "SWITZERLAND",
+    "region": "Graubunden",
+    "description": "St. Moritz is a destination in Graubunden, Switzerland. Explore its scenery, local character and nearby attractions with Tour Tourist.",
+    "bestTime": "Best time depends on the season and activities. Check local conditions before travelling.",
+    "type": "Nature & Travel",
+    "activities": [
+      "Sightseeing",
+      "Photography",
+      "Explore local attractions",
+      "Enjoy the scenery"
+    ],
+    "facts": [
+      "Destination: St. Moritz",
+      "Region: Graubunden",
+      "Country: Switzerland"
+    ],
+    "slug": "st-moritz",
+    "budget": "To be researched",
+    "highlights": [
+      "St. Moritz",
+      "Graubunden",
+      "Switzerland"
+    ]
+  },
+  {
+    "name": "Davos",
+    "country": "SWITZERLAND",
+    "region": "Graubunden",
+    "description": "Davos is a destination in Graubunden, Switzerland. Explore its scenery, local character and nearby attractions with Tour Tourist.",
+    "bestTime": "Best time depends on the season and activities. Check local conditions before travelling.",
+    "type": "Nature & Travel",
+    "activities": [
+      "Sightseeing",
+      "Photography",
+      "Explore local attractions",
+      "Enjoy the scenery"
+    ],
+    "facts": [
+      "Destination: Davos",
+      "Region: Graubunden",
+      "Country: Switzerland"
+    ],
+    "slug": "davos",
+    "budget": "To be researched",
+    "highlights": [
+      "Davos",
+      "Graubunden",
+      "Switzerland"
+    ]
+  },
+  {
+    "name": "Verbier",
+    "country": "SWITZERLAND",
+    "region": "Valais",
+    "description": "Verbier is a destination in Valais, Switzerland. Explore its scenery, local character and nearby attractions with Tour Tourist.",
+    "bestTime": "Best time depends on the season and activities. Check local conditions before travelling.",
+    "type": "Nature & Travel",
+    "activities": [
+      "Sightseeing",
+      "Photography",
+      "Explore local attractions",
+      "Enjoy the scenery"
+    ],
+    "facts": [
+      "Destination: Verbier",
+      "Region: Valais",
+      "Country: Switzerland"
+    ],
+    "slug": "verbier",
+    "budget": "To be researched",
+    "highlights": [
+      "Verbier",
+      "Valais",
+      "Switzerland"
+    ]
+  },
+  {
+    "name": "Wengen",
+    "country": "SWITZERLAND",
+    "region": "Bernese Oberland",
+    "description": "Wengen is a destination in Bernese Oberland, Switzerland. Explore its scenery, local character and nearby attractions with Tour Tourist.",
+    "bestTime": "Best time depends on the season and activities. Check local conditions before travelling.",
+    "type": "Nature & Travel",
+    "activities": [
+      "Sightseeing",
+      "Photography",
+      "Explore local attractions",
+      "Enjoy the scenery"
+    ],
+    "facts": [
+      "Destination: Wengen",
+      "Region: Bernese Oberland",
+      "Country: Switzerland"
+    ],
+    "slug": "wengen",
+    "budget": "To be researched",
+    "highlights": [
+      "Wengen",
+      "Bernese Oberland",
+      "Switzerland"
+    ]
+  },
+  {
+    "name": "Gstaad",
+    "country": "SWITZERLAND",
+    "region": "Bernese Oberland",
+    "description": "Gstaad is a destination in Bernese Oberland, Switzerland. Explore its scenery, local character and nearby attractions with Tour Tourist.",
+    "bestTime": "Best time depends on the season and activities. Check local conditions before travelling.",
+    "type": "Nature & Travel",
+    "activities": [
+      "Sightseeing",
+      "Photography",
+      "Explore local attractions",
+      "Enjoy the scenery"
+    ],
+    "facts": [
+      "Destination: Gstaad",
+      "Region: Bernese Oberland",
+      "Country: Switzerland"
+    ],
+    "slug": "gstaad",
+    "budget": "To be researched",
+    "highlights": [
+      "Gstaad",
+      "Bernese Oberland",
+      "Switzerland"
+    ]
+  },
+  {
+    "name": "Engelberg",
+    "country": "SWITZERLAND",
+    "region": "Obwalden",
+    "description": "Engelberg is a destination in Obwalden, Switzerland. Explore its scenery, local character and nearby attractions with Tour Tourist.",
+    "bestTime": "Best time depends on the season and activities. Check local conditions before travelling.",
+    "type": "Nature & Travel",
+    "activities": [
+      "Sightseeing",
+      "Photography",
+      "Explore local attractions",
+      "Enjoy the scenery"
+    ],
+    "facts": [
+      "Destination: Engelberg",
+      "Region: Obwalden",
+      "Country: Switzerland"
+    ],
+    "slug": "engelberg",
+    "budget": "To be researched",
+    "highlights": [
+      "Engelberg",
+      "Obwalden",
+      "Switzerland"
+    ]
+  },
+  {
+    "name": "Zug",
+    "country": "SWITZERLAND",
+    "region": "Zug",
+    "description": "Zug is a destination in Zug, Switzerland. Explore its scenery, local character and nearby attractions with Tour Tourist.",
+    "bestTime": "Best time depends on the season and activities. Check local conditions before travelling.",
+    "type": "Nature & Travel",
+    "activities": [
+      "Sightseeing",
+      "Photography",
+      "Explore local attractions",
+      "Enjoy the scenery"
+    ],
+    "facts": [
+      "Destination: Zug",
+      "Region: Zug",
+      "Country: Switzerland"
+    ],
+    "slug": "zug",
+    "budget": "To be researched",
+    "highlights": [
+      "Zug",
+      "Zug",
+      "Switzerland"
+    ]
+  },
+  {
+    "name": "Lugano",
+    "country": "SWITZERLAND",
+    "region": "Ticino",
+    "description": "Lugano is a destination in Ticino, Switzerland. Explore its scenery, local character and nearby attractions with Tour Tourist.",
+    "bestTime": "Best time depends on the season and activities. Check local conditions before travelling.",
+    "type": "Nature & Travel",
+    "activities": [
+      "Sightseeing",
+      "Photography",
+      "Explore local attractions",
+      "Enjoy the scenery"
+    ],
+    "facts": [
+      "Destination: Lugano",
+      "Region: Ticino",
+      "Country: Switzerland"
+    ],
+    "slug": "lugano",
+    "budget": "To be researched",
+    "highlights": [
+      "Lugano",
+      "Ticino",
+      "Switzerland"
+    ]
+  },
+  {
+    "name": "Locarno",
+    "country": "SWITZERLAND",
+    "region": "Ticino",
+    "description": "Locarno is a destination in Ticino, Switzerland. Explore its scenery, local character and nearby attractions with Tour Tourist.",
+    "bestTime": "Best time depends on the season and activities. Check local conditions before travelling.",
+    "type": "Nature & Travel",
+    "activities": [
+      "Sightseeing",
+      "Photography",
+      "Explore local attractions",
+      "Enjoy the scenery"
+    ],
+    "facts": [
+      "Destination: Locarno",
+      "Region: Ticino",
+      "Country: Switzerland"
+    ],
+    "slug": "locarno",
+    "budget": "To be researched",
+    "highlights": [
+      "Locarno",
+      "Ticino",
+      "Switzerland"
+    ]
+  },
+  {
+    "name": "Appenzell",
+    "country": "SWITZERLAND",
+    "region": "Appenzell",
+    "description": "Appenzell is a destination in Appenzell, Switzerland. Explore its scenery, local character and nearby attractions with Tour Tourist.",
+    "bestTime": "Best time depends on the season and activities. Check local conditions before travelling.",
+    "type": "Nature & Travel",
+    "activities": [
+      "Sightseeing",
+      "Photography",
+      "Explore local attractions",
+      "Enjoy the scenery"
+    ],
+    "facts": [
+      "Destination: Appenzell",
+      "Region: Appenzell",
+      "Country: Switzerland"
+    ],
+    "slug": "appenzell",
+    "budget": "To be researched",
+    "highlights": [
+      "Appenzell",
+      "Appenzell",
+      "Switzerland"
+    ]
+  },
+  {
+    "name": "Chur",
+    "country": "SWITZERLAND",
+    "region": "Graubunden",
+    "description": "Chur is a destination in Graubunden, Switzerland. Explore its scenery, local character and nearby attractions with Tour Tourist.",
+    "bestTime": "Best time depends on the season and activities. Check local conditions before travelling.",
+    "type": "Nature & Travel",
+    "activities": [
+      "Sightseeing",
+      "Photography",
+      "Explore local attractions",
+      "Enjoy the scenery"
+    ],
+    "facts": [
+      "Destination: Chur",
+      "Region: Graubunden",
+      "Country: Switzerland"
+    ],
+    "slug": "chur",
+    "budget": "To be researched",
+    "highlights": [
+      "Chur",
+      "Graubunden",
+      "Switzerland"
+    ]
+  },
+  {
+    "name": "Saas-Fee",
+    "country": "SWITZERLAND",
+    "region": "Valais",
+    "description": "Saas-Fee is a destination in Valais, Switzerland. Explore its scenery, local character and nearby attractions with Tour Tourist.",
+    "bestTime": "Best time depends on the season and activities. Check local conditions before travelling.",
+    "type": "Nature & Travel",
+    "activities": [
+      "Sightseeing",
+      "Photography",
+      "Explore local attractions",
+      "Enjoy the scenery"
+    ],
+    "facts": [
+      "Destination: Saas-Fee",
+      "Region: Valais",
+      "Country: Switzerland"
+    ],
+    "slug": "saas-fee",
+    "budget": "To be researched",
+    "highlights": [
+      "Saas-Fee",
+      "Valais",
+      "Switzerland"
+    ]
+  },
+  {
+    "name": "Crans-Montana",
+    "country": "SWITZERLAND",
+    "region": "Valais",
+    "description": "Crans-Montana is a destination in Valais, Switzerland. Explore its scenery, local character and nearby attractions with Tour Tourist.",
+    "bestTime": "Best time depends on the season and activities. Check local conditions before travelling.",
+    "type": "Nature & Travel",
+    "activities": [
+      "Sightseeing",
+      "Photography",
+      "Explore local attractions",
+      "Enjoy the scenery"
+    ],
+    "facts": [
+      "Destination: Crans-Montana",
+      "Region: Valais",
+      "Country: Switzerland"
+    ],
+    "slug": "crans-montana",
+    "budget": "To be researched",
+    "highlights": [
+      "Crans-Montana",
+      "Valais",
+      "Switzerland"
+    ]
+  },
+  {
+    "name": "Andermatt",
+    "country": "SWITZERLAND",
+    "region": "Uri",
+    "description": "Andermatt is a destination in Uri, Switzerland. Explore its scenery, local character and nearby attractions with Tour Tourist.",
+    "bestTime": "Best time depends on the season and activities. Check local conditions before travelling.",
+    "type": "Nature & Travel",
+    "activities": [
+      "Sightseeing",
+      "Photography",
+      "Explore local attractions",
+      "Enjoy the scenery"
+    ],
+    "facts": [
+      "Destination: Andermatt",
+      "Region: Uri",
+      "Country: Switzerland"
+    ],
+    "slug": "andermatt",
+    "budget": "To be researched",
+    "highlights": [
+      "Andermatt",
+      "Uri",
+      "Switzerland"
+    ]
+  },
+  {
+    "name": "Arosa",
+    "country": "SWITZERLAND",
+    "region": "Graubunden",
+    "description": "Arosa is a destination in Graubunden, Switzerland. Explore its scenery, local character and nearby attractions with Tour Tourist.",
+    "bestTime": "Best time depends on the season and activities. Check local conditions before travelling.",
+    "type": "Nature & Travel",
+    "activities": [
+      "Sightseeing",
+      "Photography",
+      "Explore local attractions",
+      "Enjoy the scenery"
+    ],
+    "facts": [
+      "Destination: Arosa",
+      "Region: Graubunden",
+      "Country: Switzerland"
+    ],
+    "slug": "arosa",
+    "budget": "To be researched",
+    "highlights": [
+      "Arosa",
+      "Graubunden",
+      "Switzerland"
+    ]
+  },
+  {
+    "name": "Rigi",
+    "country": "SWITZERLAND",
+    "region": "Central Switzerland",
+    "description": "Rigi is a destination in Central Switzerland, Switzerland. Explore its scenery, local character and nearby attractions with Tour Tourist.",
+    "bestTime": "Best time depends on the season and activities. Check local conditions before travelling.",
+    "type": "Nature & Travel",
+    "activities": [
+      "Sightseeing",
+      "Photography",
+      "Explore local attractions",
+      "Enjoy the scenery"
+    ],
+    "facts": [
+      "Destination: Rigi",
+      "Region: Central Switzerland",
+      "Country: Switzerland"
+    ],
+    "slug": "rigi",
+    "budget": "To be researched",
+    "highlights": [
+      "Rigi",
+      "Central Switzerland",
+      "Switzerland"
+    ]
+  },
+  {
+    "name": "Lake Oeschinen",
+    "country": "SWITZERLAND",
+    "region": "Bernese Oberland",
+    "description": "Lake Oeschinen is a destination in Bernese Oberland, Switzerland. Explore its scenery, local character and nearby attractions with Tour Tourist.",
+    "bestTime": "Best time depends on the season and activities. Check local conditions before travelling.",
+    "type": "Nature & Travel",
+    "activities": [
+      "Sightseeing",
+      "Photography",
+      "Explore local attractions",
+      "Enjoy the scenery"
+    ],
+    "facts": [
+      "Destination: Lake Oeschinen",
+      "Region: Bernese Oberland",
+      "Country: Switzerland"
+    ],
+    "slug": "lake-oeschinen",
+    "budget": "To be researched",
+    "highlights": [
+      "Lake Oeschinen",
+      "Bernese Oberland",
+      "Switzerland"
+    ]
+  },
+  {
+    "name": "Rhine Falls",
+    "country": "SWITZERLAND",
+    "region": "Schaffhausen",
+    "description": "Rhine Falls is a destination in Schaffhausen, Switzerland. Explore its scenery, local character and nearby attractions with Tour Tourist.",
+    "bestTime": "Best time depends on the season and activities. Check local conditions before travelling.",
+    "type": "Nature & Travel",
+    "activities": [
+      "Sightseeing",
+      "Photography",
+      "Explore local attractions",
+      "Enjoy the scenery"
+    ],
+    "facts": [
+      "Destination: Rhine Falls",
+      "Region: Schaffhausen",
+      "Country: Switzerland"
+    ],
+    "slug": "rhine-falls",
+    "budget": "To be researched",
+    "highlights": [
+      "Rhine Falls",
+      "Schaffhausen",
+      "Switzerland"
+    ]
+  },
+  {
+    "name": "Château de Chillon",
+    "country": "SWITZERLAND",
+    "region": "Vaud",
+    "description": "Château de Chillon is a destination in Vaud, Switzerland. Explore its scenery, local character and nearby attractions with Tour Tourist.",
+    "bestTime": "Best time depends on the season and activities. Check local conditions before travelling.",
+    "type": "Nature & Travel",
+    "activities": [
+      "Sightseeing",
+      "Photography",
+      "Explore local attractions",
+      "Enjoy the scenery"
+    ],
+    "facts": [
+      "Destination: Château de Chillon",
+      "Region: Vaud",
+      "Country: Switzerland"
+    ],
+    "slug": "ch-teau-de-chillon",
+    "budget": "To be researched",
+    "highlights": [
+      "Château de Chillon",
+      "Vaud",
+      "Switzerland"
+    ]
+  }
+];
+
+const params = new URLSearchParams(window.location.search);
+const placeName = params.get("place");
+
+const place = destinations.find(function(item){
+    return item.name.toLowerCase() === (placeName || "").toLowerCase();
+});
+
+function localImage(slug,index){
+    return "images/destinations/" + slug + "-" + index + ".jpg";
+}
+
+function fallbackImage(name,country){
+    return "https://loremflickr.com/1600/1000/" +
+        encodeURIComponent(name + "," + country);
+}
+
+function addList(id,items){
+    document.getElementById(id).innerHTML =
+        items.map(function(x){return "<li>"+x+"</li>";}).join("");
+}
+
+if(!place){
+    document.getElementById("title").textContent="Destination Not Found";
+    document.getElementById("location").textContent="Please return to Explore and choose a destination.";
+} else {
+    document.title = place.name + " | Tour Tourist";
+    document.getElementById("title").textContent = place.name;
+    document.getElementById("location").textContent =
+        "📍 " + place.region + ", " + place.country;
+    document.getElementById("description").textContent = place.description;
+    document.getElementById("region").textContent =
+        place.region + ", " + place.country;
+    document.getElementById("bestTime").textContent = place.bestTime;
+    document.getElementById("budget").textContent = place.budget;
+    document.getElementById("type").textContent = place.type;
+
+    document.getElementById("filenameExample").textContent =
+        place.slug + "-1.jpg ... " + place.slug + "-6.jpg";
+
+    document.getElementById("hero").style.backgroundImage =
+        'url("' + localImage(place.slug,1) + '")';
+
+    addList("highlights",place.highlights);
+    addList("activities",place.activities);
+    addList("facts",place.facts);
+
+    const gallery = document.getElementById("gallery");
+
+    for(let i=1;i<=6;i++){
+        const figure=document.createElement("figure");
+        const img=document.createElement("img");
+        img.src=localImage(place.slug,i);
+        img.alt=place.name + " photo " + i;
+        img.loading="lazy";
+
+        img.onload=function(){
+            figure.style.display="block";
+        };
+
+        img.onerror=function(){
+            // Prototype fallback until a real licensed local image is supplied.
+            img.src=fallbackImage(place.name,place.country);
+            figure.style.display="block";
+        };
+
+        figure.appendChild(img);
+
+        const caption=document.createElement("figcaption");
+        caption.textContent="Photo " + i + " — " + place.name;
+        figure.appendChild(caption);
+
+        gallery.appendChild(figure);
+    }
+
+    document.getElementById("map").src =
+        "https://www.google.com/maps?q=" +
+        encodeURIComponent(place.name + ", " + place.region + ", " + place.country) +
+        "&output=embed";
+}
+
+// Temporary browser-only photo preview.
+document.getElementById("photoPicker").addEventListener("change",function(){
+    const files=[...this.files];
+    if(!files.length) return;
+
+    const gallery=document.getElementById("gallery");
+    gallery.innerHTML="";
+
+    files.forEach(function(file,index){
+        const figure=document.createElement("figure");
+        figure.style.display="block";
+
+        const img=document.createElement("img");
+        img.src=URL.createObjectURL(file);
+        img.alt=(place ? place.name : "Destination") + " uploaded photo " + (index+1);
+
+        figure.appendChild(img);
+
+        const caption=document.createElement("figcaption");
+        caption.textContent="Preview — " + file.name;
+        figure.appendChild(caption);
+
+        gallery.appendChild(figure);
+    });
+});
+
+/* TOUR TOURIST AI — browser prototype */
+function toggleChat(){
+    const box = document.getElementById("chatBox");
+    box.style.display = box.style.display === "flex" ? "none" : "flex";
+    if(box.style.display === "flex"){
+        document.getElementById("chatInput").focus();
+    }
+}
+
+function addChatMessage(text,type){
+    const area = document.getElementById("chatMessages");
+    const div = document.createElement("div");
+    div.className = "message " + type;
+    div.innerHTML = text;
+    area.appendChild(div);
+    area.scrollTop = area.scrollHeight;
+}
+
+function quickChat(text){
+    document.getElementById("chatInput").value = text;
+    sendChat();
+}
+
+async function sendChat(){
+
+    const input = document.getElementById("chatInput");
+    const question = input.value.trim();
+
+    if(!question) return;
+
+    addChatMessage(question.replace(/</g,"&lt;"),"user");
+    input.value = "";
+
+    addChatMessage("Tour Tourist AI is thinking...","bot");
+
+    try {
+
+        const response = await fetch("http://localhost:3000/chat", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+           body: JSON.stringify({
+    message: question,
+    destination: place ? place.name : "",
+    country: place ? place.country : "",
+    region: place ? place.region : "",
+    description: place ? place.description : "",
+    bestTime: place ? place.bestTime : "",
+    activities: place ? place.activities : [],
+    facts: place ? place.facts : [],
+    budget: place ? place.budget : "",
+    highlights: place ? place.highlights : []
+})
+            
+        });
+
+        const data = await response.json();
+
+        const messages = document.getElementById("chatMessages");
+        messages.lastElementChild.remove();
+
+        addChatMessage(
+            data.reply || "Sorry, I couldn't answer that.",
+            "bot"
+        );
+
+    } catch(error) {
+
+        const messages = document.getElementById("chatMessages");
+        messages.lastElementChild.remove();
+
+        addChatMessage(
+            "⚠️ I can't connect to the AI server. Make sure node server.js is still running.",
+            "bot"
+        );
+
+    }
+}
+</script>

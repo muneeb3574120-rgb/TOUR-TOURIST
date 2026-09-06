@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Explore | Tour Tourist</title>
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,Helvetica,sans-serif;background:#050505;color:#fff}
+header{height:78px;background:#000;border-bottom:1px solid #222;display:flex;align-items:center;justify-content:space-between;padding:0 6%;position:sticky;top:0;z-index:1000}
+.logo{font-size:23px;font-weight:900;letter-spacing:4px}
+nav a{color:#aaa;text-decoration:none;margin-left:28px;font-size:14px}
+nav a:hover,nav .active{color:#fff}
+.hero{min-height:390px;padding:95px 7%;display:flex;align-items:center;background:linear-gradient(90deg,#000 10%,rgba(0,0,0,.72),rgba(0,0,0,.25)),url("https://loremflickr.com/1600/900/travel,mountains?lock=991") center/cover}
+.hero h1{font-size:70px;letter-spacing:5px;margin-bottom:15px}
+.hero p{font-size:18px;color:#ccc}
+.controls{padding:35px 7%;background:#0b0b0b;position:sticky;top:78px;z-index:900}
+.searchrow{display:flex;gap:12px;max-width:1200px;margin:auto}
+input,select{background:#151515;color:#fff;border:1px solid #333;padding:16px;border-radius:5px;font-size:15px;outline:none}
+input{flex:1}
+select{width:250px}
+.filters{display:flex;gap:10px;flex-wrap:wrap;max-width:1200px;margin:18px auto 0}
+.filter{padding:10px 18px;border:1px solid #333;background:#111;color:#aaa;border-radius:30px;cursor:pointer}
+.filter:hover,.filter.active{background:#fff;color:#000}
+.counter{max-width:1200px;margin:20px auto 0;color:#888}
+.grid{padding:45px 7%;max-width:1500px;margin:auto;display:grid;grid-template-columns:repeat(4,1fr);gap:22px}
+.card{background:#101010;border:1px solid #222;overflow:hidden;cursor:pointer;transition:.35s;position:relative}
+.card:hover{transform:translateY(-7px);border-color:#777;box-shadow:0 15px 45px #000}
+.card img{width:100%;height:220px;object-fit:cover;display:block}
+.cardbody{padding:18px}
+.card h2{font-size:21px;margin-bottom:7px}
+.country{font-size:13px;color:#999;text-transform:uppercase;letter-spacing:1px}
+.tag{display:inline-block;margin-top:12px;padding:5px 10px;border:1px solid #333;border-radius:20px;color:#aaa;font-size:11px}
+.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:2000;overflow:auto;padding:40px 15px}
+.modalbox{max-width:950px;margin:30px auto;background:#101010;border:1px solid #333}
+.modalimg{width:100%;height:420px;object-fit:cover}
+.modalcontent{padding:30px}
+.modalcontent h1{font-size:42px;margin-bottom:7px}
+.modalcontent .mcountry{color:#999;margin-bottom:20px}
+.modalcontent p{color:#ccc;line-height:1.7;margin-bottom:18px}
+.info{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:20px 0}
+.info div{background:#171717;padding:18px;border:1px solid #292929}
+.info small{display:block;color:#777;margin-bottom:7px}
+.info strong{font-size:15px}
+.close{float:right;background:#fff;color:#000;border:0;padding:10px 15px;cursor:pointer}
+.maps{display:inline-block;background:#fff;color:#000;text-decoration:none;padding:14px 22px;font-weight:bold;margin-top:5px}
+footer{background:#fff;color:#000;padding:45px 7%;margin-top:40px}
+footer strong{letter-spacing:4px}
+footer p{margin-top:12px;color:#555}
+.chatbtn{position:fixed;right:25px;bottom:25px;width:58px;height:58px;border-radius:50%;border:0;background:#fff;color:#000;font-size:24px;cursor:pointer;z-index:3000}
+.chat{display:none;position:fixed;right:25px;bottom:95px;width:340px;background:#111;border:1px solid #444;z-index:3000;box-shadow:0 15px 50px #000}
+.chathead{padding:16px;background:#fff;color:#000;font-weight:bold}
+.chatbody{height:300px;padding:15px;overflow:auto}
+.chatinput{display:flex;border-top:1px solid #333}
+.chatinput input{border:0;border-radius:0}
+.chatinput button{border:0;padding:0 18px}
+.msg{padding:10px;margin-bottom:8px;background:#1b1b1b;border-radius:5px;color:#ddd}
+.me{background:#fff;color:#000}
+@media(max-width:1100px){.grid{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:800px){
+header{padding:0 4%}nav a{margin-left:10px;font-size:12px}
+.hero h1{font-size:45px}.grid{grid-template-columns:repeat(2,1fr);padding:30px 4%}
+.controls{padding:25px 4%;top:78px}.searchrow{flex-direction:column}select{width:100%}
+.info{grid-template-columns:1fr}.modalimg{height:280px}.modalcontent h1{font-size:30px}
+}
+@media(max-width:550px){.grid{grid-template-columns:1fr}.hero{min-height:330px}.chat{width:calc(100% - 30px);right:15px}}
+</style>
+</head>
+
+<body>
+
+<header>
+<div class="logo">TOUR TOURIST</div>
+<nav>
+<a href="index.html">Home</a>
+<a href="./explore.html">Explore</a>
+<a href="./countries.html">Countries</a>
+<a href="./index.html#about">About</a>
+</nav>
+</header>
+
+<section class="hero">
+<div>
+<h1>EXPLORE</h1>
+<p>Discover 500 incredible destinations around the world.</p>
+</div>
+</section>
+
+<section class="controls">
+
+<div class="searchrow">
+<input id="search" type="text" placeholder="Search a country, city or destination...">
+<select id="country">
+<option value="">All Countries</option>
+</select>
+</div>
+
+<div class="filters">
+<button class="filter active" data-type="all">All</button>
+<button class="filter" data-type="nature">Nature</button>
+<button class="filter" data-type="beach">Beach</button>
+<button class="filter" data-type="city">Cities</button>
+<button class="filter" data-type="historic">Historic</button>
+</div>
+
+<div class="counter" id="counter">Showing 500 destinations</div>
+
+</section>
+
+<main class="grid" id="grid"></main>
+
+<div class="modal" id="modal">
+<div class="modalbox">
+<img id="mimg" class="modalimg">
+<div class="modalcontent">
+<button class="close" onclick="closeModal()">✕</button>
+<h1 id="mtitle"></h1>
+<div id="mcountry" class="mcountry"></div>
+<p id="mdesc"></p>
+
+<div class="info">
+<div><small>BEST TIME</small><strong id="mtime"></strong></div>
+<div><small>TYPICAL BUDGET</small><strong id="mbudget"></strong></div>
+<div><small>EXPERIENCE</small><strong id="mtype"></strong></div>
+</div>
+
+<p><strong>Things to experience:</strong><br><span id="mactivities"></span></p>
+
+<a id="maps" class="maps" target="_blank">📍 Open in Google Maps</a>
+</div>
+</div>
+</div>
+
+<button class="chatbtn" onclick="toggleChat()">💬</button>
+
+<div class="chat" id="chat">
+<div class="chathead">TOUR TOURIST AI</div>
+<div class="chatbody" id="chatbody">
+<div class="msg">Hi! 👋 Tell me what kind of destination you're looking for.</div>
+</div>
+<div class="chatinput">
+<input id="chatinput" placeholder="Ask me...">
+<button onclick="sendChat()">➤</button>
+</div>
+</div>
+
+<footer>
+<strong>TOUR TOURIST</strong>
+<p>Discover beautiful places. Find your next adventure.</p>
+<p>Designed & Developed by Muneeb Rehman</p>
+<p>© 2026 Tour Tourist. All rights reserved.</p>
+</footer>
+
+<script>
+
+/* =========================================================
+   500 DESTINATIONS
+   EXACTLY 10 DESTINATIONS FOR EACH OF 50 COUNTRIES
+========================================================= */
+
+const data={
+
+"Pakistan":["Hunza Valley","Skardu","Fairy Meadows","Naltar Valley","Swat Valley","Neelum Valley","Murree","Lahore","Islamabad","Deosai National Park"],
+
+"Japan":["Tokyo","Kyoto","Osaka","Mount Fuji","Nara","Hiroshima","Hakone","Sapporo","Okinawa","Takayama"],
+
+"Switzerland":["Zermatt","Interlaken","Lucerne","Zurich","Jungfraujoch","Grindelwald","Lauterbrunnen","Montreux","St. Moritz","Lake Geneva"],
+
+"Italy":["Rome","Venice","Florence","Milan","Amalfi Coast","Cinque Terre","Lake Como","Dolomites","Siena","Capri"],
+
+"France":["Paris","Nice","French Riviera","Mont Saint-Michel","Loire Valley","Provence","Chamonix","Bordeaux","Strasbourg","Corsica"],
+
+"Norway":["Oslo","Bergen","Tromsø","Lofoten Islands","Geirangerfjord","Flåm","Stavanger","Ålesund","Trondheim","Svalbard"],
+
+"Iceland":["Reykjavík","Blue Lagoon","Golden Circle","Jökulsárlón","Vík","Skógafoss","Seljalandsfoss","Snæfellsnes Peninsula","Akureyri","Westfjords"],
+
+"Greece":["Athens","Santorini","Mykonos","Crete","Meteora","Rhodes","Corfu","Zakynthos","Delphi","Naxos"],
+
+"Spain":["Barcelona","Madrid","Seville","Granada","Mallorca","Ibiza","Tenerife","San Sebastián","Valencia","Costa Brava"],
+
+"Portugal":["Lisbon","Porto","Sintra","Madeira","Algarve","Azores","Coimbra","Évora","Cascais","Nazaré"],
+
+"United Kingdom":["London","Edinburgh","Scottish Highlands","Lake District","Bath","Oxford","York","Cornwall","Snowdonia","Giant's Causeway"],
+
+"Netherlands":["Amsterdam","Rotterdam","Giethoorn","Keukenhof","Utrecht","The Hague","Delft","Kinderdijk","Zaanse Schans","Maastricht"],
+
+"Germany":["Berlin","Munich","Hamburg","Black Forest","Neuschwanstein Castle","Cologne","Rhine Valley","Dresden","Nuremberg","Garmisch-Partenkirchen"],
+
+"Austria":["Vienna","Salzburg","Hallstatt","Innsbruck","Tyrol","Grossglockner","Zell am See","Kitzbühel","Graz","Wachau Valley"],
+
+"Czech Republic":["Prague","Český Krumlov","Karlovy Vary","Brno","Kutná Hora","Bohemian Switzerland","Olomouc","Pilsen","Telč","Liberec"],
+
+"Croatia":["Dubrovnik","Split","Hvar","Plitvice Lakes","Zadar","Rovinj","Korčula","Šibenik","Brač","Krka National Park"],
+
+"Türkiye":["Istanbul","Cappadocia","Antalya","Pamukkale","Bodrum","Ephesus","Fethiye","Göreme","Trabzon","Mount Ararat"],
+
+"United Arab Emirates":["Dubai","Abu Dhabi","Sharjah","Ras Al Khaimah","Fujairah","Al Ain","Hatta","Liwa Oasis","Jebel Jais","Sir Bani Yas Island"],
+
+"Egypt":["Cairo","Giza Pyramids","Luxor","Aswan","Abu Simbel","Hurghada","Sharm El Sheikh","Siwa Oasis","Alexandria","White Desert"],
+
+"Morocco":["Marrakesh","Fes","Chefchaouen","Casablanca","Essaouira","Merzouga","Atlas Mountains","Rabat","Tangier","Aït Benhaddou"],
+
+"South Africa":["Cape Town","Kruger National Park","Garden Route","Johannesburg","Stellenbosch","Drakensberg","Hermanus","Durban","Blyde River Canyon","Plettenberg Bay"],
+
+"Tanzania":["Serengeti National Park","Mount Kilimanjaro","Zanzibar","Ngorongoro Crater","Tarangire National Park","Arusha","Lake Manyara","Mafia Island","Nungwi","Selous Game Reserve"],
+
+"Kenya":["Maasai Mara","Nairobi","Amboseli National Park","Diani Beach","Lake Nakuru","Tsavo National Park","Lamu","Mount Kenya","Naivasha","Samburu"],
+
+"United States":["New York City","Grand Canyon","Yellowstone","Yosemite","Las Vegas","San Francisco","Hawaii","Miami","New Orleans","Washington, D.C."],
+
+"Canada":["Vancouver","Banff","Jasper","Toronto","Montreal","Quebec City","Niagara Falls","Whistler","Victoria","Prince Edward Island"],
+
+"Mexico":["Mexico City","Cancún","Tulum","Playa del Carmen","Chichén Itzá","Oaxaca","Puerto Vallarta","Los Cabos","Guanajuato","Bacalar"],
+
+"Costa Rica":["San José","Arenal Volcano","Monteverde","Manuel Antonio","Tamarindo","Guanacaste","Corcovado","Tortuguero","La Fortuna","Puerto Viejo"],
+
+"Brazil":["Rio de Janeiro","Iguazu Falls","São Paulo","Salvador","Amazon Rainforest","Florianópolis","Lençóis Maranhenses","Fernando de Noronha","Brasília","Paraty"],
+
+"Argentina":["Buenos Aires","Patagonia","Iguazú Falls","Mendoza","Bariloche","Ushuaia","Salta","El Calafate","Córdoba","Puerto Madryn"],
+
+"Chile":["Santiago","Atacama Desert","Torres del Paine","Valparaíso","Easter Island","Puerto Varas","Chiloé","Pucón","San Pedro de Atacama","Lake District"],
+
+"Peru":["Machu Picchu","Cusco","Lima","Sacred Valley","Arequipa","Lake Titicaca","Colca Canyon","Huacachina","Paracas","Huaraz"],
+
+"Colombia":["Cartagena","Medellín","Bogotá","Salento","Tayrona National Park","Guatapé","San Andrés","Villa de Leyva","Santa Marta","Coffee Region"],
+
+"India":["Delhi","Agra","Jaipur","Kerala","Goa","Varanasi","Udaipur","Ladakh","Rishikesh","Darjeeling"],
+
+"Maldives":["Malé","Maafushi","Ari Atoll","Baa Atoll","Vaavu Atoll","Addu City","Hulhumalé","Thulusdhoo","Dhigurah","Rasdhoo"],
+
+"Indonesia":["Bali","Ubud","Jakarta","Komodo National Park","Lombok","Gili Islands","Yogyakarta","Flores","Raja Ampat","Lake Toba"],
+
+"Thailand":["Bangkok","Phuket","Chiang Mai","Krabi","Koh Samui","Pattaya","Ayutthaya","Pai","Koh Phi Phi","Khao Sok National Park"],
+
+"Malaysia":["Kuala Lumpur","Langkawi","Penang","Sabah","Perhentian Islands","Malacca","Cameron Highlands","Borneo","Redang Island","Taman Negara"],
+
+"Singapore":["Marina Bay","Gardens by the Bay","Sentosa Island","Chinatown","Little India","Orchard Road","Singapore Zoo","Pulau Ubin","Clarke Quay","Jewel Changi"],
+
+"Philippines":["Palawan","Boracay","Cebu","Bohol","Siargao","Manila","El Nido","Coron","Banaue Rice Terraces","Davao"],
+
+"Vietnam":["Hanoi","Ha Long Bay","Ho Chi Minh City","Hoi An","Da Nang","Nha Trang","Sapa","Hue","Phu Quoc","Ninh Binh"],
+
+"South Korea":["Seoul","Busan","Jeju Island","Gyeongju","Incheon","Sokcho","Pyeongchang","Andong","Jeonju","Seoraksan National Park"],
+
+"Australia":["Sydney","Melbourne","Great Barrier Reef","Uluru","Great Ocean Road","Gold Coast","Tasmania","Cairns","Perth","Whitsunday Islands"],
+
+"New Zealand":["Auckland","Queenstown","Rotorua","Milford Sound","Wellington","Christchurch","Wanaka","Franz Josef Glacier","Bay of Islands","Tongariro National Park"],
+
+"Fiji":["Nadi","Suva","Denarau Island","Coral Coast","Yasawa Islands","Mamanuca Islands","Taveuni","Kadavu","Vanua Levu","Natadola Beach"],
+
+"Sweden":["Stockholm","Gothenburg","Kiruna","Abisko","Malmö","Visby","Gothenburg Archipelago","Drottningholm Palace","Sarek National Park","Åre"],
+
+"Finland":["Helsinki","Rovaniemi","Lapland","Turku","Tampere","Porvoo","Kemi","Nuuksio National Park","Åland Islands","Levi"],
+
+"Slovenia":["Ljubljana","Lake Bled","Lake Bohinj","Triglav National Park","Piran","Postojna Cave","Predjama Castle","Soča Valley","Kranjska Gora","Maribor"],
+
+"Montenegro":["Kotor","Budva","Durmitor National Park","Perast","Sveti Stefan","Žabljak","Ulcinj","Lake Skadar","Herceg Novi","Biogradska Gora"],
+
+"Liechtenstein":["Vaduz","Malbun","Triesenberg","Schellenberg","Balzers","Gutenberg Castle","Ruggeller Riet","Steg","Fürstensteig","Liechtenstein Trail"],
+
+"Ireland":["Dublin","Cliffs of Moher","Ring of Kerry","Galway","Killarney National Park","Cork","Giant's Causeway","Dingle Peninsula","Wicklow Mountains","Kilkenny"]
+
+};
+
+const countries=Object.keys(data);
+
+let places=[];
+countries.forEach(country=>{
+data[country].forEach(place=>{
+places.push({name:place,country:country});
+});
+});
+
+const bestTimes={
+"Pakistan":"March–October",
+"Japan":"March–May / October–November",
+"Switzerland":"June–September",
+"Italy":"April–June / September–October",
+"France":"April–October",
+"Norway":"May–September",
+"Iceland":"June–August",
+"Greece":"May–October",
+"Spain":"April–October",
+"Portugal":"March–October",
+"United Kingdom":"May–September",
+"Netherlands":"April–May",
+"Germany":"May–September",
+"Austria":"June–September",
+"Czech Republic":"May–September",
+"Croatia":"May–September",
+"Türkiye":"April–October",
+"United Arab Emirates":"November–March",
+"Egypt":"October–April",
+"Morocco":"March–May / September–November",
+"South Africa":"September–April",
+"Tanzania":"June–October",
+"Kenya":"June–October",
+"United States":"April–October",
+"Canada":"June–September",
+"Mexico":"November–April",
+"Costa Rica":"December–April",
+"Brazil":"December–March",
+"Argentina":"October–April",
+"Chile":"October–March",
+"Peru":"May–September",
+"Colombia":"December–March",
+"India":"October–March",
+"Maldives":"November–April",
+"Indonesia":"May–October",
+"Thailand":"November–February",
+"Malaysia":"December–February",
+"Singapore":"February–April",
+"Philippines":"December–May",
+"Vietnam":"February–April / September–November",
+"South Korea":"April–June / September–November",
+"Australia":"September–November / March–May",
+"New Zealand":"December–February",
+"Fiji":"May–October",
+"Sweden":"June–August",
+"Finland":"June–August / December–March",
+"Slovenia":"May–September",
+"Montenegro":"May–September",
+"Liechtenstein":"May–September",
+"Ireland":"May–September"
+};
+
+const budgets={
+"Pakistan":"$20–60/day",
+"Japan":"$70–180/day",
+"Switzerland":"$100–250/day",
+"Italy":"$70–180/day",
+"France":"$80–200/day",
+"Norway":"$100–250/day",
+"Iceland":"$100–250/day",
+"Greece":"$60–160/day",
+"Spain":"$60–150/day",
+"Portugal":"$50–130/day",
+"United Kingdom":"$80–180/day",
+"Netherlands":"$70–170/day",
+"Germany":"$60–150/day",
+"Austria":"$70–170/day",
+"Czech Republic":"$40–100/day",
+"Croatia":"$50–130/day",
+"Türkiye":"$40–120/day",
+"United Arab Emirates":"$80–220/day",
+"Egypt":"$30–100/day",
+"Morocco":"$30–90/day",
+"South Africa":"$50–140/day",
+"Tanzania":"$80–200/day",
+"Kenya":"$70–180/day",
+"United States":"$100–250/day",
+"Canada":"$90–220/day",
+"Mexico":"$40–120/day",
+"Costa Rica":"$50–140/day",
+"Brazil":"$40–120/day",
+"Argentina":"$40–110/day",
+"Chile":"$50–130/day",
+"Peru":"$35–100/day",
+"Colombia":"$35–100/day",
+"India":"$20–70/day",
+"Maldives":"$100–300/day",
+"Indonesia":"$30–100/day",
+"Thailand":"$30–100/day",
+"Malaysia":"$30–90/day",
+"Singapore":"$80–200/day",
+"Philippines":"$30–100/day",
+"Vietnam":"$25–80/day",
+"South Korea":"$50–140/day",
+"Australia":"$100–250/day",
+"New Zealand":"$80–200/day",
+"Fiji":"$70–180/day",
+"Sweden":"$80–190/day",
+"Finland":"$70–180/day",
+"Slovenia":"$50–120/day",
+"Montenegro":"$40–100/day",
+"Liechtenstein":"$90–200/day",
+"Ireland":"$70–170/day"
+};
+
+function typeOf(place){
+
+let p=place.toLowerCase();
+
+if(/beach|island|coast|reef|atoll|maldives|phuket|boracay|bali|cancún|tulum|mykonos|santorini|capri|hvar|dubrovnik|fiji|palawan|coron|el nido|zanzibar|seychelles/.test(p))
+return "beach";
+
+if(/mount|valley|park|forest|lake|waterfall|desert|glacier|fjord|volcano|canyon|rainforest|highlands|nature|safari|national park|dolomites|patagonia|lapland/.test(p))
+return "nature";
+
+if(/castle|pyramid|temple|historic|ephesus|machu|ayutthaya|giza|luxor|kyoto|nara|rome|siena|florence|agra|varanasi|delft|bath|oxford|york/.test(p))
+return "historic";
+
+return "city";
+}
+
+function description(place,country){
+return `${place} is one of the remarkable destinations to discover in ${country}. Explore its scenery, culture, local experiences and unforgettable sights while creating your own Tour Tourist adventure.`;
+}
+
+function imageFor(place,country){
+let q=encodeURIComponent(place+" "+country+" travel");
+let lock=Math.abs(hash(place+country))%900+1;
+return `https://loremflickr.com/1200/800/${q}?lock=${lock}`;
+}
+
+function hash(str){
+let h=0;
+for(let i=0;i<str.length;i++)h=((h<<5)-h)+str.charCodeAt(i)|0;
+return Math.abs(h);
+}
+
+function render(){
+
+let search=document.getElementById("search").value.toLowerCase().trim();
+let country=document.getElementById("country").value;
+let active=document.querySelector(".filter.active").dataset.type;
+
+let result=places.filter(x=>{
+
+let text=(x.name+" "+x.country).toLowerCase();
+
+let searchOK=!search||text.includes(search);
+let countryOK=!country||x.country===country;
+let typeOK=active==="all"||typeOf(x.name)===active;
+
+return searchOK&&countryOK&&typeOK;
+
+});
+
+result.sort((a,b)=>{
+
+if(search){
+
+let aa=a.name.toLowerCase();
+let bb=b.name.toLowerCase();
+
+let as=aa===search?0:aa.startsWith(search)?1:aa.includes(search)?2:3;
+let bs=bb===search?0:bb.startsWith(search)?1:bb.includes(search)?2:3;
+
+return as-bs;
+}
+
+return 0;
+
+});
+
+document.getElementById("counter").textContent=
+`Showing ${result.length} of ${places.length} destinations`;
+
+let grid=document.getElementById("grid");
+
+grid.innerHTML=result.map((x,i)=>`
+
+<article class="card" onclick='openModal(${JSON.stringify(x).replace(/'/g,"&#39;")})'>
+
+<img src="${imageFor(x.name,x.country)}"
+alt="${x.name}"
+loading="lazy"
+onerror="this.src='https://placehold.co/1200x800/111/fff?text=${encodeURIComponent(x.name)}'">
+
+<div class="cardbody">
+<div class="country">${x.country}</div>
+<h2>${x.name}</h2>
+<span class="tag">${typeOf(x.name).toUpperCase()}</span>
+</div>
+
+</article>
+
+`).join("");
+
+}
+
+countries.forEach(c=>{
+let o=document.createElement("option");
+o.value=c;
+o.textContent=c;
+document.getElementById("country").appendChild(o);
+});
+
+document.getElementById("search").addEventListener("input",render);
+document.getElementById("country").addEventListener("change",render);
+
+document.querySelectorAll(".filter").forEach(btn=>{
+btn.addEventListener("click",()=>{
+document.querySelectorAll(".filter").forEach(x=>x.classList.remove("active"));
+btn.classList.add("active");
+render();
+});
+});
+
+function openModal(x){
+
+document.getElementById("modal").style.display="block";
+
+document.getElementById("mimg").src=imageFor(x.name,x.country);
+document.getElementById("mimg").onerror=function(){
+this.src="https://placehold.co/1200x800/111/fff?text="+encodeURIComponent(x.name);
+};
+
+document.getElementById("mtitle").textContent=x.name;
+document.getElementById("mcountry").textContent=x.country;
+document.getElementById("mdesc").textContent=description(x.name,x.country);
+document.getElementById("mtime").textContent=bestTimes[x.country]||"Year-round";
+document.getElementById("mbudget").textContent=budgets[x.country]||"$50–150/day";
+document.getElementById("mtype").textContent=typeOf(x.name);
+
+document.getElementById("mactivities").textContent=
+`Sightseeing, photography, local culture, food, exploration and unforgettable experiences in ${x.name}.`;
+
+document.getElementById("maps").href=
+"https://www.google.com/maps/search/?api=1&query="+
+encodeURIComponent(x.name+" "+x.country);
+
+document.body.style.overflow="hidden";
+}
+
+function closeModal(){
+document.getElementById("modal").style.display="none";
+document.body.style.overflow="";
+}
+
+document.getElementById("modal").addEventListener("click",e=>{
+if(e.target.id==="modal")closeModal();
+});
+
+document.addEventListener("keydown",e=>{
+if(e.key==="Escape")closeModal();
+});
+
+/* COUNTRY URL FILTER */
+
+const params=new URLSearchParams(location.search);
+const urlCountry=params.get("country");
+
+if(urlCountry){
+
+let found=countries.find(c=>c.toLowerCase()===urlCountry.toLowerCase());
+
+if(found){
+document.getElementById("country").value=found;
+}
+
+}
+
+/* SEARCH URL */
+
+const urlSearch=params.get("search");
+
+if(urlSearch){
+document.getElementById("search").value=urlSearch;
+}
+
+render();
+
+/* =========================================================
+   TOUR TOURIST AI
+========================================================= */
+
+function toggleChat(){
+
+let c=document.getElementById("chat");
+
+c.style.display=c.style.display==="block"?"none":"block";
+
+}
+
+function sendChat(){
+
+let input=document.getElementById("chatinput");
+let text=input.value.trim();
+
+if(!text)return;
+
+let body=document.getElementById("chatbody");
+
+body.innerHTML+=`<div class="msg me">${text}</div>`;
+
+let lower=text.toLowerCase();
+let reply="";
+
+if(lower.includes("beach")){
+
+let matches=places.filter(x=>typeOf(x.name)==="beach").slice(0,5);
+
+reply="🏝️ Great choice! Try: "+matches.map(x=>x.name+" ("+x.country+")").join(", ")+".";
+
+}
+
+else if(lower.includes("mountain")){
+
+let matches=places.filter(x=>/mount|valley|fjord|highlands|glacier/i.test(x.name)).slice(0,5);
+
+reply="🏔️ For mountains, check out: "+matches.map(x=>x.name+" ("+x.country+")").join(", ")+".";
+
+}
+
+else if(lower.includes("peaceful")||lower.includes("quiet")){
+
+let matches=["Hunza Valley","Hallstatt","Lake Bled","Milford Sound","Faroe Islands","Raja Ampat"];
+
+reply="🌿 For a peaceful escape, consider "+matches.join(", ")+".";
+
+}
+
+else if(lower.includes("cheap")||lower.includes("budget")){
+
+reply="💰 Good budget-friendly choices include Pakistan, India, Vietnam, Thailand, Indonesia, Morocco and Egypt.";
+
+}
+
+else if(lower.includes("luxury")){
+
+reply="✨ For luxury travel, consider Switzerland, Maldives, UAE, France, Singapore or New Zealand.";
+
+}
+
+else if(lower.includes("family")){
+
+reply="👨‍👩‍👧‍👦 Great family destinations include Japan, Switzerland, Singapore, Australia, New Zealand and Malaysia.";
+
+}
+
+else if(lower.includes("pakistan")){
+
+reply="🇵🇰 Pakistan has amazing destinations such as Hunza, Skardu, Fairy Meadows, Swat, Neelum Valley and Deosai.";
+
+}
+
+else if(lower.includes("japan")){
+
+reply="🇯🇵 Japan recommendations: Tokyo, Kyoto, Osaka, Mount Fuji, Nara, Hakone and Okinawa.";
+
+}
+
+else{
+
+reply="🌎 Tell me your preferred country, budget, or travel style — for example: beach, mountains, peaceful, luxury, family or budget.";
+
+}
+
+setTimeout(()=>{
+body.innerHTML+=`<div class="msg">${reply}</div>`;
+body.scrollTop=body.scrollHeight;
+},300);
+
+input.value="";
+
+}
+
+document.getElementById("chatinput").addEventListener("keydown",e=>{
+if(e.key==="Enter")sendChat();
+});
+
+</script>
+
+</body>
+</html>

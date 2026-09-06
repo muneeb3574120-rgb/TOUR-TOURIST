@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>About | Tour Tourist</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:Arial, Helvetica, sans-serif;
+    background:#000;
+    color:#fff;
+}
+
+/* HEADER */
+
+header{
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    padding:25px 6%;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    z-index:10;
+}
+
+.logo{
+    font-size:22px;
+    font-weight:bold;
+    letter-spacing:3px;
+}
+
+nav{
+    display:flex;
+    gap:30px;
+}
+
+nav a{
+    color:white;
+    text-decoration:none;
+    font-size:14px;
+    transition:.3s;
+}
+
+nav a:hover{
+    opacity:.6;
+}
+
+/* HERO */
+
+.hero{
+    height:70vh;
+    min-height:500px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+
+    background:
+    linear-gradient(rgba(0,0,0,.55),rgba(0,0,0,.8)),
+    url("https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=2000&q=90");
+
+    background-size:cover;
+    background-position:center;
+}
+
+.hero-content{
+    max-width:900px;
+    padding:30px;
+}
+
+.hero h1{
+    font-size:clamp(45px,8vw,100px);
+    letter-spacing:8px;
+    margin-bottom:20px;
+}
+
+.hero p{
+    font-size:20px;
+    color:#ddd;
+}
+
+/* ABOUT */
+
+.about{
+    max-width:1100px;
+    margin:auto;
+    padding:100px 30px;
+}
+
+.about h2{
+    font-size:42px;
+    margin-bottom:25px;
+}
+
+.about p{
+    color:#bbb;
+    font-size:18px;
+    line-height:1.8;
+    margin-bottom:25px;
+}
+
+/* FEATURES */
+
+.features{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:25px;
+    margin-top:60px;
+}
+
+.feature{
+    border:1px solid #333;
+    padding:40px 30px;
+    transition:.3s;
+}
+
+.feature:hover{
+    transform:translateY(-8px);
+    border-color:#777;
+}
+
+.feature h3{
+    font-size:22px;
+    margin-bottom:15px;
+}
+
+.feature p{
+    color:#aaa;
+    line-height:1.7;
+}
+
+/* VISION */
+
+.vision{
+    background:#111;
+    padding:100px 30px;
+    text-align:center;
+}
+
+.vision h2{
+    font-size:45px;
+    margin-bottom:25px;
+}
+
+.vision p{
+    max-width:800px;
+    margin:auto;
+    color:#aaa;
+    font-size:18px;
+    line-height:1.8;
+}
+
+/* FOOTER */
+
+footer{
+    background:#fff;
+    color:#000;
+    padding:50px 30px;
+    text-align:center;
+}
+
+footer h3{
+    letter-spacing:4px;
+    margin-bottom:15px;
+}
+
+footer p{
+    color:#555;
+    margin:8px;
+}
+
+/* MOBILE */
+
+@media(max-width:700px){
+
+    header{
+        padding:20px;
+    }
+
+    nav{
+        gap:12px;
+    }
+
+    nav a{
+        font-size:12px;
+    }
+
+    .features{
+        grid-template-columns:1fr;
+    }
+
+    .about h2{
+        font-size:32px;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+
+<div class="logo">
+TOUR TOURIST
+</div>
+
+<nav>
+<a href="index.html">Home</a>
+<a href="explore.html">Explore</a>
+<a href="countries.html">Countries</a>
+<a href="about.html">About</a>
+</nav>
+
+</header>
+
+
+<section class="hero">
+
+<div class="hero-content">
+
+<h1>ABOUT US</h1>
+
+<p>
+Discover the world. Find places worth remembering.
+</p>
+
+</div>
+
+</section>
+
+
+<section class="about">
+
+<h2>Travel Should Be About Discovery</h2>
+
+<p>
+Tour Tourist is a travel discovery platform designed to help people
+discover beautiful places around the world.
+</p>
+
+<p>
+From peaceful mountain valleys and hidden lakes to incredible cities,
+islands, forests and historical places, our goal is to make discovering
+your next destination simple and exciting.
+</p>
+
+<p>
+Search for a destination, explore countries, discover new places and
+find inspiration for your next journey.
+</p>
+
+
+<div class="features">
+
+<div class="feature">
+
+<h3>🌍 Discover</h3>
+
+<p>
+Explore beautiful destinations from different countries and regions
+around the world.
+</p>
+
+</div>
+
+
+<div class="feature">
+
+<h3>🧭 Explore</h3>
+
+<p>
+Find destinations based on your interests, travel style and the type
+of experience you want.
+</p>
+
+</div>
+
+
+<div class="feature">
+
+<h3>✨ Personalize</h3>
+
+<p>
+Our vision is to understand what kind of traveler you are and help
+you discover places that match you.
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+
+<section class="vision">
+
+<h2>Our Vision</h2>
+
+<p>
+We want Tour Tourist to become a place where anyone can discover
+thousands of incredible destinations around the world and turn
+travel inspiration into real adventures.
+</p>
+
+</section>
+
+
+<footer>
+
+<h3>TOUR TOURIST</h3>
+
+<p>Discover beautiful places. Find your next adventure.</p>
+
+<p>Designed & Developed by Muneeb Rehman</p>
+
+<p>© 2026 Tour Tourist. All rights reserved.</p>
+
+</footer>
+
+
+</body>
+</html>
